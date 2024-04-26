@@ -13,7 +13,7 @@ npm i
 npx prisma generate
 ```
 
-Modifique o arquivo `env.example` para `env.example`. Após a edição, modifique a string de conexao `DATABASE_URL` com a string de conexão da sua instância do Postgre.
+Modifique o arquivo `env.example` para `env`. Após a edição, modifique a string de conexao `DATABASE_URL` com a string de conexão da sua instância do Postgre.
 
 Execute o comando
 
