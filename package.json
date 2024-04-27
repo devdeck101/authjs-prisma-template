@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.0.0",
     "@hookform/resolvers": "^3.3.4",
     "@prisma/client": "^5.13.0",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -17,10 +18,12 @@
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
+    "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.376.0",
     "next": "14.2.3",
+    "next-auth": "^5.0.0-beta.17",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.51.3",
@@ -30,6 +33,7 @@
     "zod": "^3.23.4"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

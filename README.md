@@ -15,6 +15,18 @@ npx prisma generate
 
 Modifique o arquivo `env.example` para `env`. Após a edição, modifique a string de conexao `DATABASE_URL` com a string de conexão da sua instância do Postgre.
 
+Para gerar a chave de `NEXTAUTH_SECRET`, pode utilizar o comando abaixo:
+
+```bash
+openssl rand -base64 32
+```
+
+ou
+
+```bash
+npm exec auth secret
+```
+
 Execute o comando
 
 ```bash
