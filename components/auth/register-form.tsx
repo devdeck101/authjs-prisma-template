@@ -17,7 +17,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { LoginSchema } from "@/schemas/auth";
+import { RegisterSchema } from "@/schemas/auth";
 import {
   Form,
   FormControl,
@@ -27,38 +27,62 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { login } from "@/actions/auth";
+import { register } from "@/actions/auth";
 import { LoaderIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
-export default function LoginForm() {
+export default function RegisterForm() {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const form = useForm<z.infer<typeof LoginSchema>>({
-    resolver: zodResolver(LoginSchema),
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
-    console.log(values);
+  const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
     startTransition(async () => {
-      console.log("startTransition");
-      await login(values);
+      await register(values);
+      router.push("/auth/login");
     });
   };
 
   return (
     <Card className="mx-auto max-w-sm min-w-[400px]">
       <CardHeader>
-        <CardTitle className="text-2xl">Conecte-se</CardTitle>
-        <CardDescription>Seja bem-vindo novamente</CardDescription>
+        <CardTitle className="text-2xl">Registre-se</CardTitle>
+        <CardDescription>Seja bem-vindo</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="name"
+                          placeholder="Jose da Silva"
+                          required
+                          {...field}
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormDescription className="hidden">
+                        Seu nome.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                 <FormField
                   control={form.control}
                   name="email"
@@ -103,6 +127,7 @@ export default function LoginForm() {
                     </FormItem>
                   )}
                 />
+
                 <Button
                   variant={"default"}
                   className="w-full"
@@ -111,16 +136,16 @@ export default function LoginForm() {
                   <LoaderIcon
                     className={!isPending ? "hidden" : "animate-spin mr-2"}
                   />
-                  <span>Conectar</span>
+                  <span>Registrar</span>
                 </Button>
               </div>
             </form>
           </Form>
 
           <div className="mt-4 text-center text-sm">
-            Não tem uma conta?{" "}
-            <Link href="/auth/register" className="underline">
-              Cadastre-se
+            Já tem uma conta?{" "}
+            <Link href="/auth/login" className="underline">
+              Efetue Login
             </Link>
           </div>
         </div>

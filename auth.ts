@@ -23,10 +23,6 @@ export const {
         password: { label: "Senha", type: "password", placeholder: "******" },
       },
       async authorize(credentials) {
-        console.log(`authorize(credentials)`);
-        console.log(`CREDENTIALS: ${JSON.stringify(credentials)}`);
-        console.log(`---------------------`);
-
         const user: User = {
           id: "1",
           name: "Bruno Kilian",
@@ -39,10 +35,6 @@ export const {
   ],
   callbacks: {
     jwt({ token, user }) {
-      console.log(`jwt({ token, user })`);
-      console.log(`TOKEN: ${JSON.stringify(token)}`);
-      console.log(`USER: ${JSON.stringify(user)}`);
-      console.log(`---------------------`);
       if (user) {
         // User is available during sign-in
         token.id = user.id;
@@ -52,10 +44,6 @@ export const {
     session({ session, token }) {
       // `session.user.address` is now a valid property, and will be type-checked
       // in places like `useSession().data.user` or `auth().user`
-      console.log(`session({ session, token })`);
-      console.log(`SESSIOM: ${JSON.stringify(token)}`);
-      console.log(`TOKEN: ${JSON.stringify(token)}`);
-      console.log(`---------------------`);
       return {
         ...session,
         user: {
