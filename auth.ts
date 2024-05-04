@@ -1,8 +1,7 @@
-import NextAuth, { type User, type DefaultSession } from "next-auth";
+import NextAuth, { type DefaultSession } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import Credentials from "next-auth/providers/credentials";
-
 import { prisma } from "./lib/db";
+import authConfig from "./auth.config";
 
 export const {
   handlers: { GET, POST },
@@ -11,55 +10,35 @@ export const {
   signOut,
 } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  providers: [
-    Credentials({
-      name: "credentials",
-      credentials: {
-        email: {
-          label: "Email",
-          type: "text",
-          placeholder: "voce@provider.com.br",
-        },
-        password: { label: "Senha", type: "password", placeholder: "******" },
-      },
-      async authorize(credentials) {
-        const user: User = {
-          id: "1",
-          name: "Bruno Kilian",
-          email: "bk@gmail.com",
-        };
-
-        return user;
-      },
-    }),
-  ],
+  session: {
+    strategy: "jwt",
+  },
+  pages: {
+    signIn: "/auth/login",
+  },
   callbacks: {
     jwt({ token, user }) {
       if (user) {
         // User is available during sign-in
+        //TODO: Verificar a extensão
         token.id = user.id;
+        token.role = "DEFAULT";
       }
       return token;
     },
     session({ session, token }) {
-      // `session.user.address` is now a valid property, and will be type-checked
+      // `session.user.role` is now a valid property, and will be type-checked
       // in places like `useSession().data.user` or `auth().user`
       return {
         ...session,
         user: {
           ...session.user,
-          role: "DEFAULT",
+          role: token.role,
         },
       };
     },
   },
-  pages: {
-    signIn: "/auth/login",
-  },
-  session: {
-    strategy: "jwt",
-  },
-  debug: true,
+  ...authConfig,
 });
 
 declare module "next-auth" {
