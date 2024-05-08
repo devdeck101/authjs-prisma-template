@@ -2,6 +2,8 @@ import NextAuth, { type DefaultSession } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { prisma } from "./lib/db";
 import authConfig from "./auth.config";
+import { findUserbyEmail } from "./services/auth";
+import { UserRole } from "@prisma/client";
 
 export const {
   handlers: { GET, POST },
@@ -17,12 +19,25 @@ export const {
     signIn: "/auth/login",
   },
   callbacks: {
+    async signIn({ user, email }) {
+      console.log(`$$$$$$$$$=> ${{ user }}`)
+      console.log(user)
+      console.log(email)
+
+      if (user.email) {
+        const registeredUser = await findUserbyEmail(user?.email)
+        if (!registeredUser?.emailVerified) return false
+      }
+
+      return true;
+
+    },
     jwt({ token, user }) {
       if (user) {
         // User is available during sign-in
         //TODO: Verificar a extensão
         token.id = user.id;
-        token.role = "DEFAULT";
+        token.role = UserRole.DEFAULT;
       }
       return token;
     },
@@ -41,13 +56,15 @@ export const {
   ...authConfig,
 });
 
+
 declare module "next-auth" {
   /**
    * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
    */
   interface Session {
     user: {
-      role: string;
+      role: UserRole;
+      isTwoFactorEnabled: boolean;
       /**
        * By default, TypeScript merges new interface properties and overwrites existing ones.
        * In this case, the default session user properties will be overwritten,

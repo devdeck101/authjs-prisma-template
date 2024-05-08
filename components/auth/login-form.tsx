@@ -28,6 +28,7 @@ import AuthFormMessage from "./auth-form-message";
 export default function LoginForm() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
   const form = useForm<z.infer<typeof CredentialsSchema>>({
     resolver: zodResolver(CredentialsSchema),
     defaultValues: {
@@ -40,8 +41,13 @@ export default function LoginForm() {
     startTransition(async () => {
       try {
         const resp = await login(values);
+        console.log(resp)
         if (resp.error) {
           setError(resp.error);
+        }
+        if (resp.success) {
+          setSuccess(resp.success)
+          console.log(resp.success)
         }
       } catch (err) {
         setError("Algo deu errado");
@@ -101,6 +107,9 @@ export default function LoginForm() {
               />
               {error && (
                 <AuthFormMessage type="error" message={error} title="Erro" />
+              )}
+              {success && (
+                <AuthFormMessage type="success" message={success} title="Sucesso" />
               )}
               <Button
                 variant={"default"}

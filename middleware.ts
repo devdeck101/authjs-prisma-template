@@ -7,6 +7,7 @@ export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
+
   console.log(`Middleware: ${req.nextUrl.pathname}`);
 });
 
