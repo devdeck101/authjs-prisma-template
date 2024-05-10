@@ -6,9 +6,11 @@ import { CredentialsSchema, RegisterSchema } from "@/schemas/auth";
 import { AuthError, CredentialsSignin } from "next-auth";
 import { z } from "zod";
 import bcryptjs from "bcryptjs";
-import { UserRole } from "@prisma/client";
+import { User, UserRole } from "@prisma/client";
 import { createVerificationToken, findVerificationTokenbyToken } from "@/services/auth";
-import { use } from "react";
+import { Resend } from "resend";
+import { VerificationEmailTemplate } from "@/components/auth/verification-email-template";
+
 
 
 export const login = async (credentials: z.infer<typeof CredentialsSchema>) => {
@@ -23,14 +25,10 @@ export const login = async (credentials: z.infer<typeof CredentialsSchema>) => {
         }
       }
       if (!user.emailVerified) {
-        // TODO: Gerar o Token e enviar o email de verificação
-
         const verificationToken = await createVerificationToken(user.email)
-        console.log(`=> Verification Token Created`)
-        console.log(verificationToken)
-
+        await sendAccountVerificationEmail(user, verificationToken.token)
         return {
-          success: "TODO: Send Email | E-mail enviado com sucesso"
+          success: "Verificação de E-mail enviada com sucesso"
         }
       }
       const resp = await signIn("credentials", {
@@ -69,13 +67,37 @@ export const register = async (user: z.infer<typeof RegisterSchema>) => {
           role: UserRole.DEFAULT
         },
       });
-      console.log(`Created User ${createdUser}`);
+
+      //Verification process
+      const verificationToken = await createVerificationToken(email)
+      const data = await sendAccountVerificationEmail(createdUser, verificationToken.token)
     } catch (error) {
-      console.log(error);
       throw error;
     }
   }
 };
+
+export const sendAccountVerificationEmail = async (user: User, token: string) => {
+  const resend = new Resend(process.env.RESEND_API_KEY)
+
+  const { RESEND_EMAIL_FROM, VERIFICATION_SUBJECT, NEXT_PUBLIC_URL, VERIFICATION_URL } = process.env
+  const verificationUrl = NEXT_PUBLIC_URL + VERIFICATION_URL + "?token=" + token
+  const { email } = user
+  const { data, error } = await resend.emails.send({
+    from: RESEND_EMAIL_FROM,
+    to: email,
+    subject: VERIFICATION_SUBJECT,
+    html: `<p>Clique <a href="${verificationUrl}">aqui</a> para confirmar seu e-mail.</p>`,
+  })
+
+  if (error) return {
+    error
+  }
+  return {
+    success: "E-mail enviado com sucesso"
+  }
+
+}
 
 export const findUserbyEmail = async (email: string) => {
   const user = await prisma.user.findUnique({

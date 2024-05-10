@@ -20,17 +20,11 @@ export const {
   },
   callbacks: {
     async signIn({ user, email }) {
-      console.log(`$$$$$$$$$=> ${{ user }}`)
-      console.log(user)
-      console.log(email)
-
       if (user.email) {
         const registeredUser = await findUserbyEmail(user?.email)
         if (!registeredUser?.emailVerified) return false
       }
-
       return true;
-
     },
     jwt({ token, user }) {
       if (user) {

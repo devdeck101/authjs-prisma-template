@@ -41,13 +41,11 @@ export default function LoginForm() {
     startTransition(async () => {
       try {
         const resp = await login(values);
-        console.log(resp)
         if (resp.error) {
           setError(resp.error);
         }
         if (resp.success) {
           setSuccess(resp.success)
-          console.log(resp.success)
         }
       } catch (err) {
         setError("Algo deu errado");
