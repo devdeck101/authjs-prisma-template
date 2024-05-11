@@ -10,6 +10,7 @@ import { User, UserRole } from "@prisma/client";
 import { createVerificationToken, findVerificationTokenbyToken } from "@/services/auth";
 import { Resend } from "resend";
 import { VerificationEmailTemplate } from "@/components/auth/verification-email-template";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 
 
@@ -67,13 +68,25 @@ export const register = async (user: z.infer<typeof RegisterSchema>) => {
           role: UserRole.DEFAULT
         },
       });
-
-      //Verification process
+      //Account verification flow with e-mail
       const verificationToken = await createVerificationToken(email)
-      const data = await sendAccountVerificationEmail(createdUser, verificationToken.token)
+      await sendAccountVerificationEmail(createdUser, verificationToken.token)
+      return {
+        success: "E-mail de verificação enviado"
+      }
     } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code == "P2002") {
+          return {
+            error: "Já existe uma conta relacionada a este e-mail."
+          }
+        }
+      }
       throw error;
     }
+  }
+  return {
+    error: "Dados inválidos"
   }
 };
 

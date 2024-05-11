@@ -1,15 +1,14 @@
 "use client";
 
-import Link from "next/link";
-import { useTransition } from "react";
-
-import { Button } from "@/components/ui/button";
-import AuthCard from "./auth-card";
-import { Input } from "@/components/ui/input";
-
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { LoaderIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 import { RegisterSchema } from "@/schemas/auth";
 import {
@@ -22,12 +21,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { register } from "@/actions/auth";
-import { LoaderIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+import AuthFormMessage from "./auth-form-message";
+import AuthCard from "./auth-card";
 
 export default function RegisterForm() {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -39,8 +40,16 @@ export default function RegisterForm() {
 
   const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
     startTransition(async () => {
-      await register(values);
-      router.push("/auth/login");
+      try {
+        const { success, error } = await register(values);
+        if (error) setError(error)
+        setSuccess(success!);
+        form.reset();
+      } catch (error) {
+        setSuccess("")
+        setError("Algo deu errado.")
+        form.reset();
+      }
     });
   };
 
@@ -116,7 +125,12 @@ export default function RegisterForm() {
                   </FormItem>
                 )}
               />
-
+              {error && (
+                <AuthFormMessage type="error" message={error} title="Erro" />
+              )}
+              {success && (
+                <AuthFormMessage type="success" message={success} title="Sucesso" />
+              )}
               <Button
                 variant={"default"}
                 className="w-full"

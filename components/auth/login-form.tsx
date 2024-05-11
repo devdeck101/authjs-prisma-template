@@ -43,12 +43,14 @@ export default function LoginForm() {
         const resp = await login(values);
         if (resp.error) {
           setError(resp.error);
+          form.reset();
         }
         if (resp.success) {
           setSuccess(resp.success)
         }
       } catch (err) {
         setError("Algo deu errado");
+        form.reset()
       }
     });
   };
