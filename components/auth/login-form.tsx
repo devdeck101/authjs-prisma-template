@@ -21,6 +21,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp"
 import { login } from "@/actions/auth";
 import { LoaderIcon } from "lucide-react";
 import AuthFormMessage from "./auth-form-message";
@@ -29,6 +35,7 @@ export default function LoginForm() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
+  const [showOTPForm, setShowOTP] = useState<boolean>(false)
   const form = useForm<z.infer<typeof CredentialsSchema>>({
     resolver: zodResolver(CredentialsSchema),
     defaultValues: {
@@ -39,8 +46,17 @@ export default function LoginForm() {
 
   const onSubmit = async (values: z.infer<typeof CredentialsSchema>) => {
     startTransition(async () => {
+      console.log(values)
       try {
         const resp = await login(values);
+        if (resp.data?.twoFactorAuthEnabled) {
+          setShowOTP(true)
+          if (resp.error) {
+            setError(resp.error)
+            return
+          }
+          return
+        }
         if (resp.error) {
           setError(resp.error);
           form.reset();
@@ -60,68 +76,114 @@ export default function LoginForm() {
       <div className="space-y-4">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="space-y-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>E-mail</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="voce@provedor.com.br"
-                        required
-                        {...field}
-                        disabled={isPending}
-                      />
-                    </FormControl>
-                    <FormDescription className="hidden">
-                      Seu e-mail.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Senha</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="******"
-                        required
-                        {...field}
-                        disabled={isPending}
-                      />
-                    </FormControl>
-                    <FormDescription className="hidden">
-                      Seu e-mail.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {error && (
-                <AuthFormMessage type="error" message={error} title="Erro" />
-              )}
-              {success && (
-                <AuthFormMessage type="success" message={success} title="Sucesso" />
-              )}
-              <Button
-                variant={"default"}
-                className="w-full"
-                disabled={isPending}
-              >
-                <LoaderIcon
-                  className={!isPending ? "hidden" : "animate-spin mr-2"}
+            {!showOTPForm && (
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>E-mail</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="voce@provedor.com.br"
+                          required
+                          {...field}
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormDescription className="hidden">
+                        Seu e-mail.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-                <span>Conectar</span>
-              </Button>
-            </div>
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Senha</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="******"
+                          required
+                          {...field}
+                          disabled={isPending}
+                        />
+                      </FormControl>
+                      <FormDescription className="hidden">
+                        Seu e-mail.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {error && (
+                  <AuthFormMessage type="error" message={error} title="Erro" />
+                )}
+                {success && (
+                  <AuthFormMessage type="success" message={success} title="Sucesso" />
+                )}
+                <Button
+                  variant={"default"}
+                  className="w-full"
+                  disabled={isPending}
+                >
+                  <LoaderIcon
+                    className={!isPending ? "hidden" : "animate-spin mr-2"}
+                  />
+                  <span>Conectar</span>
+                </Button>
+              </div>
+            )}
+            {showOTPForm && (
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="code"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Código</FormLabel>
+                      <FormControl>
+                        <InputOTP maxLength={6} {...field}>
+                          <InputOTPGroup>
+                            <InputOTPSlot index={0} />
+                            <InputOTPSlot index={1} />
+                            <InputOTPSlot index={2} />
+                          </InputOTPGroup>
+                          <InputOTPGroup>
+                            <InputOTPSlot index={3} />
+                            <InputOTPSlot index={4} />
+                            <InputOTPSlot index={5} />
+                          </InputOTPGroup>
+                        </InputOTP>
+                      </FormControl>
+                      <FormDescription>
+                        Favor entrar com o códio enviado por e-mail
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {error && (
+                  <AuthFormMessage type="error" message={error} title="Erro" />
+                )}
+                <Button
+                  variant={"default"}
+                  className="w-full"
+                  disabled={isPending}
+                >
+                  <LoaderIcon
+                    className={!isPending ? "hidden" : "animate-spin mr-2"}
+                  />
+                  <span>Validar</span>
+                </Button>
+              </div>
+            )}
           </form>
         </Form>
 

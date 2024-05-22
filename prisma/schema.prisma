@@ -19,16 +19,18 @@ enum UserRole {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String    @unique
-  emailVerified DateTime?
-  image         String?
-  role          UserRole  @default(DEFAULT)
-  password      String?
-  accounts      Account[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id                     String    @id @default(cuid())
+  name                   String?
+  email                  String    @unique
+  emailVerified          DateTime?
+  image                  String?
+  role                   UserRole  @default(DEFAULT)
+  password               String?
+  isTwoFactorAuthEnabled Boolean   @default(false)
+  twoFactorAuthVerified  DateTime?
+  accounts               Account[]
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
 }
 
 model Account {
@@ -53,6 +55,15 @@ model Account {
 }
 
 model VerificationToken {
+  id      String   @id @default(cuid())
+  email   String   @unique
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model TwoFactorToken {
   id      String   @id @default(cuid())
   email   String   @unique
   token   String   @unique

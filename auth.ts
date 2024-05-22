@@ -4,6 +4,7 @@ import { prisma } from "./lib/db";
 import authConfig from "./auth.config";
 import { findUserbyEmail } from "./services/auth";
 import { UserRole } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 export const {
   handlers: { GET, POST },

@@ -67,6 +67,7 @@ export default function RegisterForm() {
                     <FormLabel>Name</FormLabel>
                     <FormControl>
                       <Input
+                        autoComplete="off"
                         type="name"
                         placeholder="Jose da Silva"
                         required

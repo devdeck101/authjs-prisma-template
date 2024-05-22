@@ -8,6 +8,8 @@ declare global {
       RESEND_API_KEY: string;
       RESEND_EMAIL_FROM: string;
       VERIFICATION_SUBJECT: string;
+      AUTH_LOGIN_REDIRECT: string;
+      OTP_SUBJECT: string;
     }
   }
 }

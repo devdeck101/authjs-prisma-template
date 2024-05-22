@@ -10,15 +10,16 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { CircleUser, LogOut } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useCurrentUser } from "@/hooks/use-current-user"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import LogoutButton from "./logout-button"
 import LoginButton from "./login-button"
+import { User } from "next-auth"
 
-type Props = {}
+type Props = {
+    user?: User
+}
 
-const LoginBadge = (props: Props) => {
-    const user = useCurrentUser()
+const LoginBadge = ({ user }: Props) => {
     return (
         <>
             {user && (<DropdownMenu>

@@ -20,8 +20,8 @@ export default async function RootLayout({
 }>) {
   const session = await auth();
   return (
-    <html lang="en">
-      <body className={cn(inter.className, "")} suppressHydrationWarning={true}>
+    <html lang="pt-BR">
+      <body className={inter.className} suppressHydrationWarning>
         <SessionProvider session={session}>
           <ThemeProvider
             attribute="class"

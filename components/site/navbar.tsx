@@ -1,11 +1,14 @@
+// "use client"
 import Link from "next/link";
 import { Fingerprint, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import LoginBadge from "@/components/auth/login-badge";
 import { ThemeToggle } from "../theme-toggle";
+import { auth } from "@/auth";
 type Props = {};
 
-const Navbar = (props: Props) => {
+const Navbar = async (props: Props) => {
+  const session = await auth()
   return (
     <>
       <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
@@ -58,7 +61,7 @@ const Navbar = (props: Props) => {
             />
           </div>
         </form>
-        <LoginBadge />
+        <LoginBadge user={session?.user} />
         <ThemeToggle />
       </div>
     </>
