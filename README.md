@@ -13,7 +13,28 @@ npm i
 npx prisma generate
 ```
 
-Modifique o arquivo `env.example` para `env`. Após a edição, modifique a string de conexao `DATABASE_URL` com a string de conexão da sua instância do Postgre.
+## Utilização de Container Docker do Bando de Dados Postgres
+
+Na raiz do projeto, existe um arquivo `docker-compose.yml` com as configuração de uma images de banco
+de dados Postgres. Caso não tenha o docker instalado, pode encontrá-lo aqui [Get Docker](https://docs.docker.com/get-docker/).
+
+Para inicializar o container
+
+```bash
+docker compose up -d
+```
+
+Para finalizar o serviço
+
+```bash
+docker compose down postgres
+```
+
+## Modificação de Variáveis de Ambiente
+
+Modifique o arquivo `.env.example` para `.env`.
+Após a edição, modifique a string de conexao `DATABASE_URL` com a string de conexão da sua instância do Postgres. Caso você queira utilizar um conteiner docker, eu inclue na pasta raiz do projeto uma
+configuração de desenvolvimento.
 
 Para gerar a chave de `NEXTAUTH_SECRET`, pode utilizar o comando abaixo:
 

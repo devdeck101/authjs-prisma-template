@@ -1,0 +1,9 @@
+services:
+  postgres:
+    container_name: dev_database
+    image: postgres
+    environment:
+      - POSTGRES_USER=developerdeck101
+      - POSTGRES_PASSWORD=developerdeck101
+    ports:
+      - 5432:5432
