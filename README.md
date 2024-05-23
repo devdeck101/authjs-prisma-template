@@ -54,6 +54,12 @@ Execute o comando
 npx prisma migrate dev
 ```
 
+ou
+
+```bash
+npx prisma db push
+```
+
 ```bash
 npm run dev
 ```
