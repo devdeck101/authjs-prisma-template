@@ -1,4 +1,4 @@
-Este é um template de projeto de autenticação usando [Next.js](https://nextjs.org/) e [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+430554Este é um template de projeto de autenticação usando [Next.js](https://nextjs.org/) e [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 Foi incluido a inicialização com [Shadcn-ui](https://ui.shadcn.com/), prisma [Prisma](https://www.prisma.io/) e Authjs | Next-Auth [Authjs](https://authjs.dev/)
 
 ## Getting Started
@@ -9,11 +9,7 @@ Primeiramente, execute o ambiente de desenvolvimento:
 npm i
 ```
 
-```bash
-npx prisma generate
-```
-
-## Utilização de Container Docker do Bando de Dados Postgres
+## Utilização de Container Docker do Banco de Dados Postgres
 
 Na raiz do projeto, existe um arquivo `docker-compose.yml` com as configuração de uma images de banco
 de dados Postgres. Caso não tenha o docker instalado, pode encontrá-lo aqui [Get Docker](https://docs.docker.com/get-docker/).
@@ -33,7 +29,7 @@ docker compose down postgres
 ## Modificação de Variáveis de Ambiente
 
 Modifique o arquivo `.env.example` para `.env`.
-Após a edição, modifique a string de conexao `DATABASE_URL` com a string de conexão da sua instância do Postgres. Caso você queira utilizar um conteiner docker, eu inclue na pasta raiz do projeto uma
+Após a edição, modifique a string de conexao `DATABASE_URL` com a string de conexão da sua instância do Postgres. Caso você queira utilizar um conteiner docker, eu inclui na pasta raiz do projeto uma
 configuração de desenvolvimento.
 
 Para gerar a chave de `NEXTAUTH_SECRET`, pode utilizar o comando abaixo:
