@@ -26,7 +26,7 @@ import {
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@/components/ui/input-otp"
+} from "@/components/ui/input-otp";
 import { login } from "@/actions/auth";
 import { LoaderIcon } from "lucide-react";
 import AuthFormMessage from "./auth-form-message";
@@ -35,7 +35,7 @@ export default function LoginForm() {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string>("");
   const [success, setSuccess] = useState<string>("");
-  const [showOTPForm, setShowOTP] = useState<boolean>(false)
+  const [showOTPForm, setShowOTP] = useState<boolean>(false);
   const form = useForm<z.infer<typeof CredentialsSchema>>({
     resolver: zodResolver(CredentialsSchema),
     defaultValues: {
@@ -46,27 +46,28 @@ export default function LoginForm() {
 
   const onSubmit = async (values: z.infer<typeof CredentialsSchema>) => {
     startTransition(async () => {
-      console.log(values)
       try {
         const resp = await login(values);
         if (resp.data?.twoFactorAuthEnabled) {
-          setShowOTP(true)
+          setShowOTP(true);
           if (resp.error) {
-            setError(resp.error)
-            return
+            setError(resp.error);
+            return;
           }
-          return
+          return;
         }
         if (resp.error) {
           setError(resp.error);
           form.reset();
+          return;
         }
         if (resp.success) {
-          setSuccess(resp.success)
+          setSuccess(resp.success);
+          return;
         }
       } catch (err) {
         setError("Algo deu errado");
-        form.reset()
+        form.reset();
       }
     });
   };
@@ -107,13 +108,23 @@ export default function LoginForm() {
                     <FormItem>
                       <FormLabel>Senha</FormLabel>
                       <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="******"
-                          required
-                          {...field}
-                          disabled={isPending}
-                        />
+                        <div>
+                          <div className="flex items-center">
+                            <Link
+                              href="/auth/reset-password"
+                              className="ml-auto inline-block text-sm underline"
+                            >
+                              Esqueceu a senha?
+                            </Link>
+                          </div>
+                          <Input
+                            type="password"
+                            placeholder="******"
+                            required
+                            {...field}
+                            disabled={isPending}
+                          />
+                        </div>
                       </FormControl>
                       <FormDescription className="hidden">
                         Seu e-mail.
@@ -126,7 +137,11 @@ export default function LoginForm() {
                   <AuthFormMessage type="error" message={error} title="Erro" />
                 )}
                 {success && (
-                  <AuthFormMessage type="success" message={success} title="Sucesso" />
+                  <AuthFormMessage
+                    type="success"
+                    message={success}
+                    title="Sucesso"
+                  />
                 )}
                 <Button
                   variant={"default"}

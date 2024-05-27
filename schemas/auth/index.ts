@@ -3,7 +3,7 @@ import { z } from "zod";
 export const CredentialsSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
-  code: z.optional(z.string())
+  code: z.optional(z.string()),
 });
 
 export const RegisterSchema = z.object({
@@ -21,3 +21,11 @@ export const RegisterSchema = z.object({
 //     path: ["confirmPassword"],
 //   }
 // );
+
+export const ResetPasswordSchema = z.object({
+  email: z.string().email(),
+});
+
+export const NewPasswordSchema = z.object({
+  password: z.string().min(6),
+});

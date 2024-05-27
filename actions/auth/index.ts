@@ -1,19 +1,29 @@
 "use server";
 
-import { signIn, signOut } from "@/auth";
+import { signIn } from "@/auth";
 import { prisma } from "@/lib/db";
-import { CredentialsSchema, RegisterSchema } from "@/schemas/auth";
+import {
+  CredentialsSchema,
+  NewPasswordSchema,
+  RegisterSchema,
+  ResetPasswordSchema,
+} from "@/schemas/auth";
 import { AuthError, CredentialsSignin } from "next-auth";
 import { z } from "zod";
 import bcryptjs from "bcryptjs";
 import { User, UserRole } from "@prisma/client";
 import {
+  createResetPasswordToken,
   createTwoFactorAuthToken,
   createVerificationToken,
+  deleteResetPasswordToken,
   deleteTwoFactorAuthTokenById,
+  findResetPasswordTokenByToken,
   findTwoFactorAuthTokeByToken,
   findTwoFactorAuthTokenByEmail,
+  findUserbyEmail,
   findVerificationTokenbyToken,
+  updatePassword,
 } from "@/services/auth";
 import { Resend } from "resend";
 import { VerificationEmailTemplate } from "@/components/auth/verification-email-template";
@@ -30,7 +40,6 @@ export const login = async (credentials: z.infer<typeof CredentialsSchema>) => {
   const validCredentials = await CredentialsSchema.safeParse(credentials);
   if (validCredentials.success) {
     try {
-      console.log(validCredentials.data);
       const { email, password, code } = validCredentials.data;
       const user = await findUserByEmail(email);
       if (!user) {
@@ -103,7 +112,7 @@ export const login = async (credentials: z.infer<typeof CredentialsSchema>) => {
       if (err instanceof AuthError) {
         if (err instanceof CredentialsSignin) {
           return {
-            error: err.code,
+            error: "Credenciais inválidas",
           };
         }
       }
@@ -160,6 +169,69 @@ export const register = async (user: z.infer<typeof RegisterSchema>) => {
 };
 
 /**
+ * This method initiates the reset password process
+ * @param values
+ * @returns
+ */
+export const resetPassword = async (
+  values: z.infer<typeof ResetPasswordSchema>
+) => {
+  const validatedEmail = ResetPasswordSchema.safeParse(values);
+  if (!validatedEmail.success) {
+    return { error: "E-mail inválido" };
+  }
+
+  const { email } = validatedEmail.data;
+
+  const existingUser = await findUserByEmail(email);
+  if (!existingUser) {
+    return { error: "Usuário não encontrado" };
+  }
+
+  const resetPasswordToken = await createResetPasswordToken(email);
+  await sendResetPasswordEmail(
+    resetPasswordToken.email,
+    resetPasswordToken.token
+  );
+
+  return { success: "E-mail de mudança de senha enviado" };
+};
+
+/**
+ * This method uses Resend to send an e-mail to change the user's password
+ * @param { User } user
+ * @param { string } token
+ * @returns it returns an object
+ * { error: string, success: string } or
+ * throw an error
+ */
+export const sendResetPasswordEmail = async (email: string, token: string) => {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+
+  const {
+    NEXT_PUBLIC_URL,
+    RESEND_EMAIL_FROM,
+    RESET_PASSWORD_SUBJECT,
+    RESET_PASSWORD_URL,
+  } = process.env;
+  const resetUrl = `${NEXT_PUBLIC_URL}${RESET_PASSWORD_URL}?token=${token}`;
+  const { data, error } = await resend.emails.send({
+    from: RESEND_EMAIL_FROM,
+    to: email,
+    subject: RESET_PASSWORD_SUBJECT,
+    html: `<p>Clique <a href="${resetUrl}">aqui</a> para modificar sua senha.</p>`,
+  });
+
+  if (error)
+    return {
+      error,
+    };
+  return {
+    success: "E-mail enviado com sucesso",
+  };
+};
+
+/**
  * This method uses Resend to send an e-mail to the user to verify
  * the ownership of the e-mail by the user
  * @param { User } user
@@ -180,8 +252,7 @@ export const sendAccountVerificationEmail = async (
     NEXT_PUBLIC_URL,
     VERIFICATION_URL,
   } = process.env;
-  const verificationUrl =
-    NEXT_PUBLIC_URL + VERIFICATION_URL + "?token=" + token;
+  const verificationUrl = `${NEXT_PUBLIC_URL}${VERIFICATION_URL}?token=${token}`;
   const { email } = user;
   const { data, error } = await resend.emails.send({
     from: RESEND_EMAIL_FROM,
@@ -330,4 +401,50 @@ export const verifyTwoFactorToken = async (token: string) => {
   return {
     success: "Autênticação de dois fatores verificada",
   };
+};
+
+/**
+ * This method updates the user's password
+ * @param { string } passwordData - Changed hashed password
+ * @param { string } token
+ * @returns
+ */
+export const changePassword = async (
+  passwordData: z.infer<typeof NewPasswordSchema>,
+  token: string | null
+) => {
+  if (!token) {
+    return { error: "Token não encontrado" };
+  }
+
+  const validatedPassword = NewPasswordSchema.safeParse(passwordData);
+
+  if (!validatedPassword.success) {
+    return { error: "Valores inválidos" };
+  }
+
+  const { password } = validatedPassword.data;
+
+  const existingToken = await findResetPasswordTokenByToken(token);
+  if (!existingToken) {
+    return { error: "Token inválido" };
+  }
+
+  const hasExpired = new Date(existingToken.expires) < new Date();
+  if (hasExpired) {
+    return { error: "Token Expirado" };
+  }
+
+  const existingUser = await findUserbyEmail(existingToken.email);
+  if (!existingUser) {
+    return { error: "Usuário não encontrado" };
+  }
+
+  const hashedPassword = await bcryptjs.hash(password, 10);
+
+  await updatePassword(existingUser.id, hashedPassword);
+
+  await deleteResetPasswordToken(existingToken.id);
+
+  return { success: "Senha atualizada" };
 };
