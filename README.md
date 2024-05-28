@@ -7,13 +7,14 @@ Este Starter-Kit foi desenvolvido para poupar seu tempo. Aqui você encontra o q
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/devdeck101/authjs-prisma-template) ![GitHub forks](https://img.shields.io/github/forks/devdeck101/authjs-prisma-template) ![GitHub Repo stars](https://img.shields.io/github/stars/devdeck101/authjs-prisma-template) ![GitHub watchers](https://img.shields.io/github/watchers/devdeck101/authjs-prisma-template) 
 
-
+<div class="display:grid">
 <img src="assets/landing_page.jpg" alt="drawing" width="400"/>
-<img src="assets/login_page.jpg" alt="drawing" width="200"/>
-<img src="assets/register_page.jpg" alt="drawing" width="200"/>
-<img src="assets/dois_fatores_page.jpg" alt="drawing" width="200"/>
-<img src="assets/forget_password_page.jpg" alt="drawing" width="200"/>
+<img src="assets/login_page.jpg" alt="drawing" width="400"/>
+<img src="assets/register_page.jpg" alt="drawing" width="400"/>
+<img src="assets/dois_fatores_page.jpg" alt="drawing" width="400"/>
+<img src="assets/forget_password_page.jpg" alt="drawing" width="400"/>
 <img src="assets/light_landing_page.jpg" alt="drawing" width="400"/>
+</div>
 
 
 ## <img src="assets/wave.gif" alt="drawing" width="20"/> Tudo explicado nos detalhes no meu canal
