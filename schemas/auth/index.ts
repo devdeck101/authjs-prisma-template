@@ -1,16 +1,16 @@
-import { z } from "zod";
+import { z } from "zod"
 
 export const CredentialsSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(6),
-  code: z.optional(z.string()),
-});
+	email: z.string().email(),
+	password: z.string().min(6),
+	code: z.optional(z.string()),
+})
 
 export const RegisterSchema = z.object({
-  name: z.string().min(5),
-  email: z.string().email(),
-  password: z.string().min(6),
-});
+	name: z.string().min(5),
+	email: z.string().email(),
+	password: z.string().min(6),
+})
 // .refine(
 //   (values) => {
 //     console.log(`Values ${JSON.stringify(values)}`);
@@ -23,9 +23,9 @@ export const RegisterSchema = z.object({
 // );
 
 export const ResetPasswordSchema = z.object({
-  email: z.string().email(),
-});
+	email: z.string().email(),
+})
 
 export const NewPasswordSchema = z.object({
-  password: z.string().min(6),
-});
+	password: z.string().min(6),
+})
