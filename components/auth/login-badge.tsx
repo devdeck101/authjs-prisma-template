@@ -33,9 +33,9 @@ const LoginBadge = ({ user }: Props) => {
 						</Avatar>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
-						<DropdownMenuLabel>My Account</DropdownMenuLabel>
+						<DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem>Settings</DropdownMenuItem>
+						<DropdownMenuItem>Perfil</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<LogoutButton>
 							<DropdownMenuItem>

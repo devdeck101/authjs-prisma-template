@@ -3,7 +3,7 @@ import type { NextAuthConfig } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { InvalidCredentials, UserNotFound } from "./lib/auth"
 import { CredentialsSchema } from "./schemas/auth"
-import { findUserbyEmail } from "./services/auth"
+import { findUserbyEmail } from "./services"
 
 export default {
 	providers: [

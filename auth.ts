@@ -4,7 +4,7 @@ import NextAuth, { type DefaultSession } from "next-auth"
 import { revalidatePath } from "next/cache"
 import authConfig from "./auth.config"
 import { prisma } from "./lib/db"
-import { findUserbyEmail } from "./services/auth"
+import { findUserbyEmail } from "./services"
 
 export const {
 	handlers: { GET, POST },

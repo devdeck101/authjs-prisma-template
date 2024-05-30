@@ -8,7 +8,7 @@ interface AuthCardProps {
 
 const AuthCard = ({ title, description, children }: AuthCardProps) => {
 	return (
-		<Card className="mx-auto max-w-sm min-w-[400px] shadow-md">
+		<Card className="mx-auto max-w-sm min-w-[350px] shadow-md">
 			<CardHeader>
 				{title && <CardTitle className="text-2xl">{title}</CardTitle>}
 				{description && <CardDescription>{description}</CardDescription>}
