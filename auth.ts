@@ -1,10 +1,10 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { UserRole } from "@prisma/client"
 import NextAuth, { type DefaultSession } from "next-auth"
-import { revalidatePath } from "next/cache"
 import authConfig from "./auth.config"
 import { prisma } from "./lib/db"
 import { findUserbyEmail } from "./services"
+import { isTwoFactorAutenticationEnabled } from "./services/auth"
 
 export const {
 	handlers: { GET, POST },
@@ -27,10 +27,13 @@ export const {
 			}
 			return true
 		},
-		jwt({ token, user }) {
+		async jwt({ token, user }) {
 			if (user) {
 				// User is available during sign-in
-				//TODO: Verificar a extensão
+				if (user.id) {
+					const isTwoFactorEnabled = await isTwoFactorAutenticationEnabled(user?.id || "")
+					token.isTwoFactorEnabled = isTwoFactorEnabled
+				}
 				token.id = user.id
 				token.role = UserRole.DEFAULT
 			}
@@ -39,6 +42,9 @@ export const {
 		session({ session, token }) {
 			// `session.user.role` is now a valid property, and will be type-checked
 			// in places like `useSession().data.user` or `auth().user`
+			if (session.user) {
+				session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean
+			}
 			return {
 				...session,
 				user: {
@@ -66,5 +72,16 @@ declare module "next-auth" {
 			 * you need to add them back into the newly declared interface.
 			 */
 		} & DefaultSession["user"]
+	}
+}
+
+// The `JWT` interface can be found in the `next-auth/jwt` submodule
+import { JWT } from "next-auth/jwt"
+
+declare module "next-auth/jwt" {
+	/** Returned by the `jwt` callback and `auth`, when using JWT sessions */
+	interface JWT {
+		/** Two Factor Authentication */
+		isTwoFactorEnabled?: boolean
 	}
 }

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { CircleUser, LogOut } from "lucide-react"
 import type { User } from "next-auth"
+import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
 import LoginButton from "./login-button"
 import LogoutButton from "./logout-button"
@@ -35,7 +36,9 @@ const LoginBadge = ({ user }: Props) => {
 					<DropdownMenuContent align="end">
 						<DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
 						<DropdownMenuSeparator />
-						<DropdownMenuItem>Perfil</DropdownMenuItem>
+						<DropdownMenuItem>
+							<Link href="/auth/settings">Perfil</Link>
+						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<LogoutButton>
 							<DropdownMenuItem>

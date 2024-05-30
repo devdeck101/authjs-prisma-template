@@ -22,6 +22,13 @@ export const RegisterSchema = z.object({
 //   }
 // );
 
+export const UserSettingsSchema = z.object({
+	name: z.string().min(5),
+	email: z.string().email(),
+	password: z.string().min(6),
+	isTwoFactorEnabled: z.boolean(),
+})
+
 export const ResetPasswordSchema = z.object({
 	email: z.string().email(),
 })

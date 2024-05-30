@@ -2,7 +2,6 @@ import { auth } from "@/auth"
 import LoginBadge from "@/components/auth/login-badge"
 import { Input } from "@/components/ui/input"
 import { Fingerprint, Search } from "lucide-react"
-// "use client"
 import Link from "next/link"
 import { ThemeToggle } from "../theme-toggle"
 

@@ -9,6 +9,17 @@ export const findTwoFactorAuthTokenByEmail = async (email: string) => {
 	})
 	return token
 }
+export const isTwoFactorAutenticationEnabled = async (id: string) => {
+	const user = await prisma.user.findUnique({
+		where: {
+			id,
+		},
+		select: {
+			isTwoFactorAuthEnabled: true,
+		},
+	})
+	return user?.isTwoFactorAuthEnabled
+}
 
 export const deleteTwoFactorAuthTokenById = async (id: string) => {
 	const token = await prisma.twoFactorToken.delete({
