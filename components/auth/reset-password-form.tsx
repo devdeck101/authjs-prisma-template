@@ -1,49 +1,49 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useState, useTransition } from "react"
-import { useForm } from "react-hook-form"
-import type * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import type * as z from "zod";
 
-import { resetPassword } from "@/actions/auth"
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { ResetPasswordSchema } from "@/schemas/auth"
-import { LoaderIcon } from "lucide-react"
-import Link from "next/link"
-import AuthCard from "./auth-card"
-import AuthFormMessage from "./auth-form-message"
+import { resetPassword } from "@/actions/auth";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { ResetPasswordSchema } from "@/schemas/auth";
+import { LoaderIcon } from "lucide-react";
+import Link from "next/link";
+import AuthCard from "./auth-card";
+import AuthFormMessage from "./auth-form-message";
 
 export const ResetPasswordForm = () => {
-	const [error, setError] = useState<string | undefined>("")
-	const [success, setSuccess] = useState<string | undefined>("")
-	const [isPending, startTransition] = useTransition()
+	const [error, setError] = useState<string | undefined>("");
+	const [success, setSuccess] = useState<string | undefined>("");
+	const [isPending, startTransition] = useTransition();
 
 	const form = useForm<z.infer<typeof ResetPasswordSchema>>({
 		resolver: zodResolver(ResetPasswordSchema),
 		defaultValues: {
 			email: "",
 		},
-	})
+	});
 
 	const onSubmit = (values: z.infer<typeof ResetPasswordSchema>) => {
-		setError("")
-		setSuccess("")
+		setError("");
+		setSuccess("");
 
 		startTransition(async () => {
 			try {
-				const { success, error } = await resetPassword(values)
-				if (error) setError(error)
-				setSuccess(success || "")
-				form.reset()
+				const { success, error } = await resetPassword(values);
+				if (error) setError(error);
+				setSuccess(success || "");
+				form.reset();
 			} catch (err) {
-				setSuccess("")
-				setError("Algo deu errado.")
-				form.reset()
+				setSuccess("");
+				setError("Algo deu errado.");
+				form.reset();
 			}
-		})
-	}
+		});
+	};
 
 	return (
 		<AuthCard title="Mudança de Senha" description="Digite o e-mail cadastrado">
@@ -80,5 +80,5 @@ export const ResetPasswordForm = () => {
 				</Link>
 			</div>
 		</AuthCard>
-	)
-}
+	);
+};

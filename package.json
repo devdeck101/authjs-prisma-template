@@ -7,8 +7,9 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"clear-db": "prisma migrate reset",
-		"push-db": "prisma db push",
+		
+		"clear-db": "prisma migrate reset -f",
+		"push-db": "prisma db push --force-reset --accept-data-loss",
 		"studio": "prisma studio",
 		"postinstall": "prisma generate"
 	},

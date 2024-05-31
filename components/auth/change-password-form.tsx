@@ -1,52 +1,52 @@
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useState, useTransition } from "react"
-import { useForm } from "react-hook-form"
-import type * as z from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import type * as z from "zod";
 
-import { changePassword, resetPassword } from "@/actions/auth"
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { NewPasswordSchema } from "@/schemas/auth"
-import { LoaderIcon } from "lucide-react"
-import Link from "next/link"
-import { useSearchParams } from "next/navigation"
-import AuthCard from "./auth-card"
-import AuthFormMessage from "./auth-form-message"
+import { changePassword, resetPassword } from "@/actions/auth";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { NewPasswordSchema } from "@/schemas/auth";
+import { LoaderIcon } from "lucide-react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import AuthCard from "./auth-card";
+import AuthFormMessage from "./auth-form-message";
 
 export const ChangePasswordForm = () => {
-	const [error, setError] = useState<string | undefined>("")
-	const [success, setSuccess] = useState<string | undefined>("")
-	const [isPending, startTransition] = useTransition()
-	const searchParam = useSearchParams()
-	const token = searchParam.get("token")
+	const [error, setError] = useState<string | undefined>("");
+	const [success, setSuccess] = useState<string | undefined>("");
+	const [isPending, startTransition] = useTransition();
+	const searchParam = useSearchParams();
+	const token = searchParam.get("token");
 
 	const form = useForm<z.infer<typeof NewPasswordSchema>>({
 		resolver: zodResolver(NewPasswordSchema),
 		defaultValues: {
 			password: "",
 		},
-	})
+	});
 
 	const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
-		setError("")
-		setSuccess("")
+		setError("");
+		setSuccess("");
 
 		startTransition(async () => {
 			try {
-				const { success, error } = await changePassword(values, token)
-				if (error) setError(error)
-				setSuccess(success || "")
-				form.reset()
+				const { success, error } = await changePassword(values, token);
+				if (error) setError(error);
+				setSuccess(success || "");
+				form.reset();
 			} catch (err) {
-				setSuccess("")
-				setError("Algo deu errado.")
-				form.reset()
+				setSuccess("");
+				setError("Algo deu errado.");
+				form.reset();
 			}
-		})
-	}
+		});
+	};
 
 	return (
 		<AuthCard title="Modifique sua senha" description="Escolha uma nova senha">
@@ -83,5 +83,5 @@ export const ChangePasswordForm = () => {
 				</Link>
 			</div>
 		</AuthCard>
-	)
-}
+	);
+};

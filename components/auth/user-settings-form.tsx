@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import { register } from "@/actions/auth"
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { useCurrentUser } from "@/hooks/use-current-user"
-import { UserSettingsSchema } from "@/schemas/auth"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { LoaderIcon, ShieldAlert } from "lucide-react"
-import Link from "next/link"
-import { useState, useTransition } from "react"
-import { useForm } from "react-hook-form"
-import type { z } from "zod"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { Separator } from "../ui/separator"
-import { Switch } from "../ui/switch"
-import AuthFormMessage from "./auth-form-message"
+import { register } from "@/actions/auth";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import { UserSettingsSchema } from "@/schemas/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderIcon, ShieldAlert } from "lucide-react";
+import Link from "next/link";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
+import { Separator } from "../ui/separator";
+import { Switch } from "../ui/switch";
+import AuthFormMessage from "./auth-form-message";
 
 export default function UserSettingsForm() {
-	const user = useCurrentUser()
-	const [isPending, startTransition] = useTransition()
-	const [error, setError] = useState<string>("")
-	const [success, setSuccess] = useState<string>("")
+	const user = useCurrentUser();
+	const [isPending, startTransition] = useTransition();
+	const [error, setError] = useState<string>("");
+	const [success, setSuccess] = useState<string>("");
 	const form = useForm<z.infer<typeof UserSettingsSchema>>({
 		resolver: zodResolver(UserSettingsSchema),
 		defaultValues: {
@@ -30,22 +30,22 @@ export default function UserSettingsForm() {
 			password: undefined,
 			isTwoFactorEnabled: user?.isTwoFactorEnabled || false,
 		},
-	})
+	});
 
 	const onSubmit = async (values: z.infer<typeof UserSettingsSchema>) => {
 		startTransition(async () => {
 			try {
-				const { success, error } = await register(values)
-				if (error) setError(error)
-				setSuccess(success || "")
-				form.reset()
+				const { success, error } = await register(values);
+				if (error) setError(error);
+				setSuccess(success || "");
+				form.reset();
 			} catch (error) {
-				setSuccess("")
-				setError("Algo deu errado.")
-				form.reset()
+				setSuccess("");
+				setError("Algo deu errado.");
+				form.reset();
 			}
-		})
-	}
+		});
+	};
 
 	return (
 		<Card x-chunk="dashboard-04-chunk-1">
@@ -152,5 +152,5 @@ export default function UserSettingsForm() {
 				</div>
 			</CardContent>
 		</Card>
-	)
+	);
 }

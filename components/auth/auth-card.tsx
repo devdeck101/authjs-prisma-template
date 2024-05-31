@@ -1,9 +1,9 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface AuthCardProps {
-	title?: string
-	description?: string
-	children: React.ReactNode
+	title?: string;
+	description?: string;
+	children: React.ReactNode;
 }
 
 const AuthCard = ({ title, description, children }: AuthCardProps) => {
@@ -15,7 +15,7 @@ const AuthCard = ({ title, description, children }: AuthCardProps) => {
 			</CardHeader>
 			<CardContent>{children}</CardContent>
 		</Card>
-	)
-}
+	);
+};
 
-export default AuthCard
+export default AuthCard;

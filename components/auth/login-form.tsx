@@ -1,63 +1,80 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useState, useTransition } from "react"
+import Link from "next/link";
+import { useState, useTransition } from "react";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import AuthCard from "./auth-card"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import AuthCard from "./auth-card";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import type { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
 
-import { login } from "@/actions/auth"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp"
-import { CredentialsSchema } from "@/schemas/auth"
-import { LoaderIcon } from "lucide-react"
-import AuthFormMessage from "./auth-form-message"
+import { login } from "@/actions/auth";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp";
+import { CredentialsSchema } from "@/schemas/auth";
+import { LoaderIcon } from "lucide-react";
+import AuthFormMessage from "./auth-form-message";
 
 export default function LoginForm() {
-	const [isPending, startTransition] = useTransition()
-	const [error, setError] = useState<string>("")
-	const [success, setSuccess] = useState<string>("")
-	const [showOTPForm, setShowOTP] = useState<boolean>(false)
+	const [isPending, startTransition] = useTransition();
+	const [error, setError] = useState<string>("");
+	const [success, setSuccess] = useState<string>("");
+	const [showOTPForm, setShowOTP] = useState<boolean>(false);
 	const form = useForm<z.infer<typeof CredentialsSchema>>({
 		resolver: zodResolver(CredentialsSchema),
 		defaultValues: {
 			email: "",
 			password: "",
 		},
-	})
+	});
 
 	const onSubmit = async (values: z.infer<typeof CredentialsSchema>) => {
 		startTransition(async () => {
 			try {
-				const resp = await login(values)
-				if (resp.data?.twoFactorAuthEnabled) {
-					setShowOTP(true)
+				const resp = await login(values);
+
+				if (!resp) {
+					setError("Resposta inválida do servidor");
+					setSuccess("")
+					form.reset();
+					return;
+				}
+
+				const { error, success, data } = resp;
+
+				if (data?.twoFactorAuthEnabled) {
+					setShowOTP(true);
 					if (resp.error) {
-						setError(resp.error)
-						return
+						setError(resp.error);
+						setSuccess("")
+						return;
 					}
-					return
+					return;
 				}
-				if (resp.error) {
-					setError(resp.error)
-					form.reset()
-					return
+
+				if (error) {
+					setError(resp.error);
+					setSuccess("")
+					form.reset();
+					return;
 				}
-				if (resp.success) {
-					setSuccess(resp.success)
-					return
+				if (success) {
+					setSuccess(resp.success);
+					setError("")
+					return;
 				}
+
+				form.reset();
 			} catch (err) {
-				setError("Algo deu errado")
-				form.reset()
+				setError("Algo deu errado");
+				setSuccess("")
+				form.reset();
 			}
-		})
-	}
+		});
+	};
 
 	return (
 		<AuthCard title="Conecte-se" description="Seja bem-vindo novamente">
@@ -152,13 +169,20 @@ export default function LoginForm() {
 					</form>
 				</Form>
 
-				<div className="mt-4 text-center text-sm">
+				{!showOTPForm && (<div className="mt-4 text-center text-sm">
 					Não tem uma conta?{" "}
 					<Link href="/auth/register" className="underline">
 						Cadastre-se
 					</Link>
-				</div>
+				</div>)}
+				{showOTPForm && (<div className="mt-4 text-center text-sm">
+					Conectar agora?{" "}
+					<Link href="/auth/login" className="underline">
+						Conectar
+					</Link>
+				</div>)}
+
 			</div>
 		</AuthCard>
-	)
+	);
 }

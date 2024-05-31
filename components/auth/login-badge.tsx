@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -8,17 +8,17 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { CircleUser, LogOut } from "lucide-react"
-import type { User } from "next-auth"
-import Link from "next/link"
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar"
-import LoginButton from "./login-button"
-import LogoutButton from "./logout-button"
+} from "@/components/ui/dropdown-menu";
+import { CircleUser, LogOut } from "lucide-react";
+import type { User } from "next-auth";
+import Link from "next/link";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import LoginButton from "./login-button";
+import LogoutButton from "./logout-button";
 
 type Props = {
-	user?: User
-}
+	user?: User;
+};
 
 const LoginBadge = ({ user }: Props) => {
 	return (
@@ -56,7 +56,7 @@ const LoginBadge = ({ user }: Props) => {
 				</LoginButton>
 			)}
 		</>
-	)
-}
+	);
+};
 
-export default LoginBadge
+export default LoginBadge;

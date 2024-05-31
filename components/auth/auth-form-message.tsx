@@ -1,11 +1,11 @@
-import { AlertCircle, CheckCircle } from "lucide-react"
+import { AlertCircle, CheckCircle } from "lucide-react";
 
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 interface AuthFormMessageProps {
-	title?: string
-	message: string
-	type: "success" | "error"
+	title?: string;
+	message: string;
+	type: "success" | "error";
 }
 const AuthFormMessage = ({ message, type, title }: AuthFormMessageProps) => {
 	return (
@@ -14,7 +14,7 @@ const AuthFormMessage = ({ message, type, title }: AuthFormMessageProps) => {
 			{title && <AlertTitle>{title}</AlertTitle>}
 			<AlertDescription>{message}</AlertDescription>
 		</Alert>
-	)
-}
+	);
+};
 
-export default AuthFormMessage
+export default AuthFormMessage;

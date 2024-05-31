@@ -19,7 +19,7 @@
 	},
 	"javascript": {
 		"formatter": {
-			"semicolons": "asNeeded",
+			"semicolons": "always",
 			"arrowParentheses": "always",
 			"bracketSameLine": false,
 			"bracketSpacing": true,

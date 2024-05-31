@@ -1,26 +1,26 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { LoaderIcon } from "lucide-react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useState, useTransition } from "react"
-import { useForm } from "react-hook-form"
-import type { z } from "zod"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderIcon } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import type { z } from "zod";
 
-import { register } from "@/actions/auth"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { RegisterSchema } from "@/schemas/auth"
-import AuthCard from "./auth-card"
-import AuthFormMessage from "./auth-form-message"
+import { register } from "@/actions/auth";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { RegisterSchema } from "@/schemas/auth";
+import AuthCard from "./auth-card";
+import AuthFormMessage from "./auth-form-message";
 
 export default function RegisterForm() {
-	const router = useRouter()
-	const [isPending, startTransition] = useTransition()
-	const [error, setError] = useState<string>("")
-	const [success, setSuccess] = useState<string>("")
+	const router = useRouter();
+	const [isPending, startTransition] = useTransition();
+	const [error, setError] = useState<string>("");
+	const [success, setSuccess] = useState<string>("");
 	const form = useForm<z.infer<typeof RegisterSchema>>({
 		resolver: zodResolver(RegisterSchema),
 		defaultValues: {
@@ -28,22 +28,22 @@ export default function RegisterForm() {
 			email: "",
 			password: "",
 		},
-	})
+	});
 
 	const onSubmit = async (values: z.infer<typeof RegisterSchema>) => {
 		startTransition(async () => {
 			try {
-				const { success, error } = await register(values)
-				if (error) setError(error)
-				setSuccess(success || "")
-				form.reset()
+				const { success, error } = await register(values);
+				if (error) setError(error);
+				setSuccess(success || "");
+				form.reset();
 			} catch (error) {
-				setSuccess("")
-				setError("Algo deu errado.")
-				form.reset()
+				setSuccess("");
+				setError("Algo deu errado.");
+				form.reset();
 			}
-		})
-	}
+		});
+	};
 
 	return (
 		<AuthCard title="Registre-se" description="Seja bem-vindo">
@@ -118,5 +118,5 @@ export default function RegisterForm() {
 				</div>
 			</div>
 		</AuthCard>
-	)
+	);
 }
