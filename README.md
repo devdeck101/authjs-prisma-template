@@ -199,7 +199,7 @@ Abrir [http://localhost:3000](http://localhost:3000) com seu navegador.
 [![Twitter Badge](https://img.shields.io/badge/-DeveloperDeck101-blue?style=flat-square&logo=Twitter&logoColor=white&link=http://twitter.com/devdeck101)](http://twitter.com/devdeck101)
 [![Discord Badge](https://img.shields.io/badge/-DeveloperDeck101-7289da?style=flat-square&logo=Discord&logoColor=white&link=http://discord.gg/GXQAVzn4Vn)](http://discord.gg/GXQAVzn4Vn)
 
-## Apoiar o Projeto e o Canal
+## Apoie o Projeto e o Canal
 
 [![Youtube Badge](https://img.shields.io/badge/-Membros_do_Canal-darkred?style=flat-square&logo=youtube&logoColor=white&link=https://www.youtube.com/channel/UCj75B_51OXb9qH15wiHs-Hw/join)](https://www.youtube.com/channel/UCj75B_51OXb9qH15wiHs-Hw/join)
 [![Static Badge](https://img.shields.io/badge/LivePix-Apoie_o_Canal_e_Projeto-blue?logo=Livepix&logoColor=%23ffffff&labelColor=blue&color=%23ffffff)](https://livepix.gg/brkilian)
