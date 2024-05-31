@@ -1,9 +1,9 @@
 
 
 
-# Pronto para autenticar seu novo projeto
+# Pronto para Autenticar Seu Novo Projeto
 
-Este Starter-Kit foi desenvolvido para poupar seu tempo. Aqui você encontra o que precisa para começar a desenvolver seu projeto com segurança.
+Este Starter Kit foi desenvolvido para poupar seu tempo, oferecendo tudo o que você precisa para começar a desenvolver seu projeto com segurança.
 
 ![GitHub last commit](https://img.shields.io/github/last-commit/devdeck101/authjs-prisma-template) ![GitHub forks](https://img.shields.io/github/forks/devdeck101/authjs-prisma-template) ![GitHub Repo stars](https://img.shields.io/github/stars/devdeck101/authjs-prisma-template) ![GitHub watchers](https://img.shields.io/github/watchers/devdeck101/authjs-prisma-template) 
 
@@ -17,7 +17,7 @@ Este Starter-Kit foi desenvolvido para poupar seu tempo. Aqui você encontra o q
 </div>
 
 
-## <img src="assets/wave.gif" alt="drawing" width="20"/> Tudo explicado nos detalhes no meu canal
+## <img src="assets/wave.gif" alt="drawing" width="20"/> Detalhes Explicados no Meu Canal
 [![Youtube Badge](https://img.shields.io/badge/-@developerdeck101-cc181e?style=flat-square&logo=youtube&logoColor=white&link=https://www.youtube.com/developerdeck101)](https://www.youtube.com/developerdeck101)
 ![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCj75B_51OXb9qH15wiHs-Hw?style=social)
 ![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UCj75B_51OXb9qH15wiHs-Hw)
@@ -48,13 +48,13 @@ Foi incluído a inicialização com [Shadcn-ui](https://ui.shadcn.com/), prisma 
 
 ## Getting Started
 
-Efetuar a clonagem do repositório
+Clone o repositório:
 
 ```bash
 git clone https://github.com/devdeck101/authjs-prisma-template.git
 ```
 
-Após entrar na pasta do projeto, instalar os pacotes:
+Entre na pasta do projeto e instale os pacotes:
 
 ```bash
 npm install
@@ -62,24 +62,22 @@ npm install
 
 ## Banco de Dados
 
-O banco de dados utilizado no projeto é o PostgreSQL. Você precisa de um instância dele para executar o projeto.
+O banco de dados utilizado é o PostgreSQL. Você precisará de uma instância dele para executar o projeto. Um arquivo docker-compose.yml está incluído para facilitar a execução de um container Docker.
 
-Obs. O projeteto possui um arquivo chamado docker-compose.yml para execução de um container docker explicado abaixo.
 
 ### Container Docker - Docker Compose
 
-Na raiz do projeto, existe um arquivo `docker-compose.yml` com as configuração de uma imagem de banco
-de dados PostgreSQL. 
+Na raiz do projeto, há um arquivo docker-compose.yml com a configuração para um banco de dados PostgreSQL.
 
 Caso não tenha o docker instalado, pode encontrá-lo aqui [Get Docker](https://docs.docker.com/get-docker/).
 
-Para inicializar o container
+Para inicializar o container:
 
 ```bash
 docker compose up -d
 ```
 
-Para finalizar o serviço
+Para finalizar o serviço:
 
 ```bash
 docker compose down postgres
@@ -88,62 +86,61 @@ docker compose down postgres
 
 ## Configuração de Envio de E-Mail
 
-É necessário um cadastro no [RESEND](https://resend.com/) e criação de uma chave de API para envios de email que incluem verificação de usuário, autenticação de 2 fatos e mudança de senha.
+É necessário se cadastrar no [RESEND](https://resend.com/) e criar uma chave de API para envios de email, incluindo verificação de usuário, autenticação de dois fatores e mudança de senha.
 
 ### RESEND API KEY
-Após logar na sua conta, siga a imagem abaixo:
+Após logar na sua conta, siga as instruções na imagem abaixo:
 
 ![image](assets/resend-api-key.jpg)
 
 ## Variáveis de Ambiente
 
-Modificar|Renomear o arquivo `.env.example` para `.env`.
-Uma vez modificado o arquivo, será necessário modificar algumas variáveis de ambiente:
+Renomeie o arquivo .env.example para .env. Depois, modifique as variáveis de ambiente conforme necessário:
 
 Váriável do banco de dados:
 ```bash
-#Exemplo levando em consideração a utilização do container docker disponível
-#DATABASE_URL="postgresql://developerdeck101:developerdeck101@127.0.0.1:5432/test"
+# Exemplo utilizando o container Docker disponível
+DATABASE_URL="postgresql://developerdeck101:developerdeck101@127.0.0.1:5432/test"
+# Ou personalize com suas próprias configurações
 DATABASE_URL="postgresql://<user>:<password>@<url>:<port>/<db_name>"
 ```
-Variável de encriptação do token JWT
+Variável de encriptação do token JWT:
 
 ```bash
 AUTH_SECRET=314FUJnJeO1zGfxpxbmqqxQsBiCl/NwOyJ9AONpG03Y=
 ```
 
-Para gerar a chave de `AUTH_SECRET`, pode utilizar o comando abaixo:
+Para gerar a chave AUTH_SECRET, utilize o comando:
 
 ```bash
-# Unix System
+# Unix 
 openssl rand -base64 32
 ```
 
 ou
 
 ```bash
-# Windows System
+# Windows 
 npm exec auth secret
 ```
 
-Caso deseje executar em modo produção `npm run start`, será necessário descomentar a variável abaixo:
+Caso deseje executar em modo produção npm run start, será necessário descomentar a variável:
 
 ```bash
 AUTH_TRUST_HOST=true
 ```
 
-As demais váriáveis são auto-explicativas.
-Qualquer dúvida, entra em contato clicando abaixo 
+Para criar as tabelas do banco de dados, é possível executar os comandos do Prisma ou scripts do projeto.
 
 [![Static Badge](https://img.shields.io/badge/-discord-Discord?logo=Discord&labelColor=5e90ee&color=%23ffff)](http://discord.gg/GXQAVzn4Vn)
 
 
 ## Tabelas do Banco de Dados
-Para a criação das tabelas do banco de dados, é possível executar os comando do prisma ou scripts do projeto
+Para criar as tabelas do banco de dados, é possível executar os comandos do Prisma ou scripts do projeto.
 
 ### Comandos Prisma
 
-Execute o comando
+Execute o comando:
 
 ```bash
 npx prisma migrate dev
@@ -158,7 +155,7 @@ npx prisma db push
 ### Scripts disponíveis
 
 ```bash
-# Crias as tabelas no banco de dados
+# Cria as tabelas no banco de dados
 npm run push-db
 ```
 
@@ -195,7 +192,7 @@ Abrir [http://localhost:3000](http://localhost:3000) com seu navegador.
 
 # Não se esqueça
 
-## Me seguir nas Redes Sociais <img src="assets/wave.gif" alt="drawing" width="20"/>
+## Siga-me nas Redes Sociais <img src="assets/wave.gif" alt="drawing" width="20"/>
 [![Youtube Badge](https://img.shields.io/badge/-@developerdeck101-darkred?style=flat-square&logo=youtube&logoColor=white&link=https://www.youtube.com/developerdeck101)](https://www.youtube.com/developerdeck101)
 [![Instagram Badge](https://img.shields.io/badge/-developerdeck101_-purple?style=flat-square&logo=instagram&logoColor=white&link=https://instagram.com/developerdeck101_/)](https://instagram.com/developerdeck101_)
 [![Linkedin Badge](https://img.shields.io/badge/-Bruno_Kilian-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/brunokilian)](https://www.linkedin.com/in/brunokilian)
