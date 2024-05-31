@@ -1,10 +1,8 @@
 "use client";
 
-import { register } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useCurrentUser } from "@/hooks/use-current-user";
 import { UserSettingsSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderIcon, ShieldAlert } from "lucide-react";
@@ -16,9 +14,15 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from "../ui/separator";
 import { Switch } from "../ui/switch";
 import AuthFormMessage from "./auth-form-message";
+import type { User } from "next-auth";
+import { changeSettings } from "@/actions/auth/settings";
+import { useSession } from "next-auth/react";
 
-export default function UserSettingsForm() {
-	const user = useCurrentUser();
+interface Props {
+	user?: User
+}
+export default function UserSettingsForm({ user }: Props) {
+	const { update } = useSession()
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState<string>("");
 	const [success, setSuccess] = useState<string>("");
@@ -28,17 +32,35 @@ export default function UserSettingsForm() {
 			name: user?.name || undefined,
 			email: user?.email || undefined,
 			password: undefined,
-			isTwoFactorEnabled: user?.isTwoFactorEnabled || false,
+			newPassword: undefined,
+			//@ts-ignore
+			isTwoFactorEnabled: !!user?.isTwoFactorEnabled,
 		},
 	});
 
 	const onSubmit = async (values: z.infer<typeof UserSettingsSchema>) => {
 		startTransition(async () => {
 			try {
-				const { success, error } = await register(values);
-				if (error) setError(error);
-				setSuccess(success || "");
-				form.reset();
+				const resp = await changeSettings(values);
+				const { success, error } = resp
+				if (!resp) {
+					setError("Resposta inválida do servidor");
+					setSuccess("")
+					form.reset();
+					return;
+				}
+
+				if (error) {
+					setError(error);
+					setSuccess("")
+					return;
+				}
+				if (success) {
+					setSuccess(success);
+					setError("")
+					update();
+					return;
+				}
 			} catch (error) {
 				setSuccess("");
 				setError("Algo deu errado.");
@@ -69,7 +91,6 @@ export default function UserSettingsForm() {
 													autoComplete="off"
 													type="name"
 													placeholder="Jose da Silva"
-													required
 													{...field}
 													disabled={isPending}
 												/>
@@ -89,9 +110,8 @@ export default function UserSettingsForm() {
 												<Input
 													type="email"
 													placeholder="voce@provedor.com.br"
-													required
 													{...field}
-													disabled={isPending}
+													disabled
 												/>
 											</FormControl>
 											<FormDescription className="hidden">Seu e-mail.</FormDescription>
@@ -106,7 +126,21 @@ export default function UserSettingsForm() {
 										<FormItem>
 											<FormLabel>Senha</FormLabel>
 											<FormControl>
-												<Input type="password" placeholder="******" required {...field} disabled={isPending} />
+												<Input type="password" placeholder="******"  {...field} disabled={isPending} />
+											</FormControl>
+											<FormDescription className="hidden">Seu e-mail.</FormDescription>
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+								<FormField
+									control={form.control}
+									name="newPassword"
+									render={({ field }) => (
+										<FormItem>
+											<FormLabel>Nova senha</FormLabel>
+											<FormControl>
+												<Input type="password" placeholder="******"  {...field} disabled={isPending} />
 											</FormControl>
 											<FormDescription className="hidden">Seu e-mail.</FormDescription>
 											<FormMessage />
