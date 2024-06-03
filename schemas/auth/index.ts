@@ -28,7 +28,7 @@ export const UserSettingsSchema = z
 		email: z.optional(z.string().email()),
 		password: z.optional(z.string().min(6)),
 		newPassword: z.optional(z.string().min(6)),
-		isTwoFactorEnabled: z.optional(z.boolean()),
+		isTwoFactorAuthEnabled: z.optional(z.boolean()),
 	})
 	.refine(
 		(values) => {

@@ -34,7 +34,7 @@ export default function UserSettingsForm({ user }: Props) {
 			password: undefined,
 			newPassword: undefined,
 			//@ts-ignore
-			isTwoFactorEnabled: !!user?.isTwoFactorEnabled,
+			isTwoFactorAuthEnabled: !!user?.isTwoFactorEnabled,
 		},
 	});
 
@@ -150,7 +150,7 @@ export default function UserSettingsForm({ user }: Props) {
 
 								<FormField
 									control={form.control}
-									name="isTwoFactorEnabled"
+									name="isTwoFactorAuthEnabled"
 									render={({ field }) => (
 										<FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 m-2 space-x-2">
 											<ShieldAlert className="text-yellow-400" />

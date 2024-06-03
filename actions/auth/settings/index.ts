@@ -41,7 +41,6 @@ export const changeSettings = async (settings: z.infer<typeof UserSettingsSchema
 	const { password, newPassword } = validData.data;
 	if (password && newPassword && userData?.password) {
 		const validPassword = bcryptjs.compare(password, userData.password);
-		console.log(validPassword);
 		if (!validPassword) {
 			return {
 				error: "Senha atual incorreta",
@@ -52,7 +51,7 @@ export const changeSettings = async (settings: z.infer<typeof UserSettingsSchema
 		settings.password = await bcryptjs.hash(newPassword, 10);
 	}
 	settings.email = undefined;
-	settings.isTwoFactorEnabled = undefined;
+	// settings.isTwoFactorEnabled = undefined;
 	try {
 		const updatedUser = await prisma.user.update({
 			data: {
@@ -62,7 +61,6 @@ export const changeSettings = async (settings: z.infer<typeof UserSettingsSchema
 				id: userData.id,
 			},
 		});
-		console.log(updatedUser);
 
 		update({
 			user: {
@@ -71,7 +69,6 @@ export const changeSettings = async (settings: z.infer<typeof UserSettingsSchema
 				//TODO: Add fields to chande roles and or e-mail for the user????
 			},
 		});
-		console.log("RETORNOU AQUI");
 		return {
 			success: "Perfil atualizado",
 		};
