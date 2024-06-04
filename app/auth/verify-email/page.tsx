@@ -1,5 +1,5 @@
-import EmailVerificationForm from "@/components/auth/email-verification-form"
-import { Suspense } from "react"
+import EmailVerificationForm from "@/components/auth/email-verification-form";
+import { Suspense } from "react";
 
 const VerifyEmail = () => {
 	return (
@@ -8,7 +8,7 @@ const VerifyEmail = () => {
 				<EmailVerificationForm />
 			</Suspense>
 		</div>
-	)
-}
+	);
+};
 
-export default VerifyEmail
+export default VerifyEmail;

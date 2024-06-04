@@ -1,5 +1,5 @@
-import { ChangePasswordForm } from "@/components/auth/change-password-form"
-import React, { Suspense } from "react"
+import { ChangePasswordForm } from "@/components/auth/change-password-form";
+import React, { Suspense } from "react";
 
 const ChangePassword = () => {
 	return (
@@ -8,7 +8,7 @@ const ChangePassword = () => {
 				<ChangePasswordForm />
 			</Suspense>
 		</div>
-	)
-}
+	);
+};
 
-export default ChangePassword
+export default ChangePassword;

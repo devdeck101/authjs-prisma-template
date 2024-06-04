@@ -1,10 +1,10 @@
 "use server";
 
 import { prisma } from "@/lib/db";
-import { findTwoFactorAuthTokeByToken } from "@/services/auth";
+import mail from "@/lib/mail";
 import { findUserbyEmail } from "@/services";
+import { findTwoFactorAuthTokeByToken } from "@/services/auth";
 import type { User } from "@prisma/client";
-import { Resend } from "resend";
 
 /**
  * This method sends an e-mail to the user with the 6 digits code to login
@@ -21,8 +21,6 @@ import { Resend } from "resend";
  * @returns {Promise<{ error?: string, success?: string }>} An object indicating the result of the operation.
  */
 export const sendTwoFactorAuthEmail = async (user: User, token: string) => {
-	const resend = new Resend(process.env.RESEND_API_KEY);
-
 	const { RESEND_EMAIL_FROM, OTP_SUBJECT } = process.env;
 
 	if (!RESEND_EMAIL_FROM || !OTP_SUBJECT) {
@@ -33,7 +31,7 @@ export const sendTwoFactorAuthEmail = async (user: User, token: string) => {
 
 	const { email } = user;
 	try {
-		const { error } = await resend.emails.send({
+		const { error } = await mail.emails.send({
 			from: RESEND_EMAIL_FROM,
 			to: email,
 			subject: OTP_SUBJECT,

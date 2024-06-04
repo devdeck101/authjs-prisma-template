@@ -1,15 +1,15 @@
 "use server";
 
+import mail from "@/lib/mail";
 import { NewPasswordSchema, ResetPasswordSchema } from "@/schemas/auth";
+import { findUserbyEmail } from "@/services";
 import {
 	createResetPasswordToken,
 	deleteResetPasswordToken,
 	findResetPasswordTokenByToken,
 	updatePassword,
 } from "@/services/auth";
-import { findUserbyEmail } from "@/services";
 import bcryptjs from "bcryptjs";
-import { Resend } from "resend";
 import type { z } from "zod";
 
 /**
@@ -43,8 +43,6 @@ export const resetPassword = async (values: z.infer<typeof ResetPasswordSchema>)
  * @returns {Promise<{error?: string, success?: string}>} The result of the email sending request.
  */
 export const sendResetPasswordEmail = async (email: string, token: string) => {
-	const resend = new Resend(process.env.RESEND_API_KEY);
-
 	const { NEXT_PUBLIC_URL, RESEND_EMAIL_FROM, RESET_PASSWORD_SUBJECT, RESET_PASSWORD_URL } = process.env;
 
 	if (!NEXT_PUBLIC_URL || !RESEND_EMAIL_FROM || !RESET_PASSWORD_SUBJECT || !RESET_PASSWORD_URL) {
@@ -52,7 +50,7 @@ export const sendResetPasswordEmail = async (email: string, token: string) => {
 	}
 
 	const resetUrl = `${NEXT_PUBLIC_URL}${RESET_PASSWORD_URL}?token=${token}`;
-	const { data, error } = await resend.emails.send({
+	const { data, error } = await mail.emails.send({
 		from: RESEND_EMAIL_FROM,
 		to: email,
 		subject: RESET_PASSWORD_SUBJECT,

@@ -1,11 +1,10 @@
 "use server";
 
 import { prisma } from "@/lib/db";
-import { findVerificationTokenbyToken } from "@/services/auth";
+import mail from "@/lib/mail";
 import { findUserbyEmail } from "@/services";
+import { findVerificationTokenbyToken } from "@/services/auth";
 import type { User } from "@prisma/client";
-import { Resend } from "resend";
-
 /**
  * This method uses Resend to send an email to the user to verify
  * the ownership of the email by the user.
@@ -15,8 +14,6 @@ import { Resend } from "resend";
  * @returns {Promise<{ error?: string, success?: string }>} An object indicating the result of the operation.
  */
 export const sendAccountVerificationEmail = async (user: User, token: string) => {
-	const resend = new Resend(process.env.RESEND_API_KEY);
-
 	const { RESEND_EMAIL_FROM, VERIFICATION_SUBJECT, NEXT_PUBLIC_URL, VERIFICATION_URL } = process.env;
 	if (!RESEND_EMAIL_FROM || !VERIFICATION_SUBJECT || !NEXT_PUBLIC_URL || !VERIFICATION_URL) {
 		return {
@@ -27,7 +24,7 @@ export const sendAccountVerificationEmail = async (user: User, token: string) =>
 	const verificationUrl = `${NEXT_PUBLIC_URL}${VERIFICATION_URL}?token=${token}`;
 	const { email } = user;
 	try {
-		const { data, error } = await resend.emails.send({
+		const { data, error } = await mail.emails.send({
 			from: RESEND_EMAIL_FROM,
 			to: email,
 			subject: VERIFICATION_SUBJECT,

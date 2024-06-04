@@ -1,19 +1,19 @@
 "use server";
 
 import { signIn } from "@/auth";
-import { CredentialsSchema } from "@/schemas/auth";
+import { CredentialsSchema, MagicLinkSignInSchema } from "@/schemas/auth";
+import { findUserbyEmail } from "@/services";
 import {
 	createTwoFactorAuthToken,
 	createVerificationToken,
 	deleteTwoFactorAuthTokenById,
 	findTwoFactorAuthTokenByEmail,
 } from "@/services/auth";
-import { findUserbyEmail } from "@/services";
 import { AuthError, CredentialsSignin } from "next-auth";
 import type { z } from "zod";
 import { sendAccountVerificationEmail } from "../email-verification";
 import { sendTwoFactorAuthEmail } from "../two-factor";
-import { validate } from "uuid";
+
 /**
  * This method is responsible for executing the login flow.
  * @param {z.infer<typeof CredentialsSchema>} credentials - The user credentials.

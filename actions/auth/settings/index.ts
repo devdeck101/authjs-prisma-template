@@ -73,7 +73,6 @@ export const changeSettings = async (settings: z.infer<typeof UserSettingsSchema
 			success: "Perfil atualizado",
 		};
 	} catch (error) {
-		console.log(error);
 		return {
 			error: "Algo deu errado",
 		};

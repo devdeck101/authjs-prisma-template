@@ -5,7 +5,6 @@ import authConfig from "./auth.config";
 import { prisma } from "./lib/db";
 import { findUserbyEmail } from "./services";
 import { isTwoFactorAutenticationEnabled } from "./services/auth";
-
 export const {
 	handlers: { GET, POST },
 	auth,
@@ -21,7 +20,10 @@ export const {
 		signIn: "/auth/login",
 	},
 	callbacks: {
-		async signIn({ user, email }) {
+		async signIn({ user, email, account, profile }) {
+			if (account && (account.provider === "google" || account.provider === "github")) {
+				return true;
+			}
 			if (user.email) {
 				const registeredUser = await findUserbyEmail(user?.email);
 				if (!registeredUser?.emailVerified) return false;

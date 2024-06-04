@@ -1,12 +1,12 @@
-import { auth } from "@/auth"
-import LoginBadge from "@/components/auth/login-badge"
-import { Input } from "@/components/ui/input"
-import { Fingerprint, Search } from "lucide-react"
-import Link from "next/link"
-import { ThemeToggle } from "../theme-toggle"
+import { auth } from "@/auth";
+import LoginBadge from "@/components/auth/login-badge";
+import { Input } from "@/components/ui/input";
+import { Fingerprint, Search } from "lucide-react";
+import Link from "next/link";
+import { ThemeToggle } from "../theme-toggle";
 
 const Navbar = async () => {
-	const session = await auth()
+	const session = await auth();
 	return (
 		<>
 			<nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
@@ -45,7 +45,7 @@ const Navbar = async () => {
 				<ThemeToggle />
 			</div>
 		</>
-	)
-}
+	);
+};
 
-export default Navbar
+export default Navbar;

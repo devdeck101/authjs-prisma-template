@@ -7,11 +7,16 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		
 		"clear-db": "prisma migrate reset -f",
 		"push-db": "prisma db push --force-reset --accept-data-loss",
 		"studio": "prisma studio",
-		"postinstall": "prisma generate"
+		"postinstall": "prisma generate",
+		"biome-lint": "npx @biomejs/biome lint ./",
+		"biome-lint-apply": "npx @biomejs/biome lint ./ --apply",
+		"biome-format": "npx @biomejs/biome format ./",
+		"biome-format-apply": "npx @biomejs/biome format ./ --write",
+		"biome-check": "npx @biomejs/biome check ./",
+		"biome-check-apply": "npx @biomejs/biome check ./ --write"
 	},
 	"dependencies": {
 		"@auth/prisma-adapter": "^2.0.0",
@@ -36,6 +41,7 @@
 		"next-themes": "^0.3.0",
 		"react": "^18",
 		"react-dom": "^18",
+		"react-email": "^2.1.4",
 		"react-hook-form": "^7.51.3",
 		"react-icons": "^5.1.0",
 		"resend": "^3.2.0",

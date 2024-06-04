@@ -67,3 +67,7 @@ export const ResetPasswordSchema = z.object({
 export const NewPasswordSchema = z.object({
 	password: z.string().min(6),
 });
+
+export const MagicLinkSignInSchema = z.object({
+	email: z.string().email(),
+});

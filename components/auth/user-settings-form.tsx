@@ -1,11 +1,14 @@
 "use client";
 
+import { changeSettings } from "@/actions/auth/settings";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { UserSettingsSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderIcon, ShieldAlert } from "lucide-react";
+import type { User } from "next-auth";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -14,15 +17,12 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Separator } from "../ui/separator";
 import { Switch } from "../ui/switch";
 import AuthFormMessage from "./auth-form-message";
-import type { User } from "next-auth";
-import { changeSettings } from "@/actions/auth/settings";
-import { useSession } from "next-auth/react";
 
 interface Props {
-	user?: User
+	user?: User;
 }
 export default function UserSettingsForm({ user }: Props) {
-	const { update } = useSession()
+	const { update } = useSession();
 	const [isPending, startTransition] = useTransition();
 	const [error, setError] = useState<string>("");
 	const [success, setSuccess] = useState<string>("");
@@ -42,22 +42,22 @@ export default function UserSettingsForm({ user }: Props) {
 		startTransition(async () => {
 			try {
 				const resp = await changeSettings(values);
-				const { success, error } = resp
+				const { success, error } = resp;
 				if (!resp) {
 					setError("Resposta inválida do servidor");
-					setSuccess("")
+					setSuccess("");
 					form.reset();
 					return;
 				}
 
 				if (error) {
 					setError(error);
-					setSuccess("")
+					setSuccess("");
 					return;
 				}
 				if (success) {
 					setSuccess(success);
-					setError("")
+					setError("");
 					update();
 					return;
 				}
@@ -107,12 +107,7 @@ export default function UserSettingsForm({ user }: Props) {
 										<FormItem>
 											<FormLabel>E-mail</FormLabel>
 											<FormControl>
-												<Input
-													type="email"
-													placeholder="voce@provedor.com.br"
-													{...field}
-													disabled
-												/>
+												<Input type="email" placeholder="voce@provedor.com.br" {...field} disabled />
 											</FormControl>
 											<FormDescription className="hidden">Seu e-mail.</FormDescription>
 											<FormMessage />
@@ -126,7 +121,7 @@ export default function UserSettingsForm({ user }: Props) {
 										<FormItem>
 											<FormLabel>Senha</FormLabel>
 											<FormControl>
-												<Input type="password" placeholder="******"  {...field} disabled={isPending} />
+												<Input type="password" placeholder="******" {...field} disabled={isPending} />
 											</FormControl>
 											<FormDescription className="hidden">Seu e-mail.</FormDescription>
 											<FormMessage />
@@ -140,7 +135,7 @@ export default function UserSettingsForm({ user }: Props) {
 										<FormItem>
 											<FormLabel>Nova senha</FormLabel>
 											<FormControl>
-												<Input type="password" placeholder="******"  {...field} disabled={isPending} />
+												<Input type="password" placeholder="******" {...field} disabled={isPending} />
 											</FormControl>
 											<FormDescription className="hidden">Seu e-mail.</FormDescription>
 											<FormMessage />

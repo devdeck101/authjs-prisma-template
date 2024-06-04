@@ -1,5 +1,5 @@
-import Navbar from "@/components/site/navbar"
-import { HandCoins, Twitch, Youtube } from "lucide-react"
+import Navbar from "@/components/site/navbar";
+import { HandCoins, Twitch, Youtube } from "lucide-react";
 
 export default function Home() {
 	return (
@@ -166,5 +166,5 @@ export default function Home() {
 				</div>
 			</main>
 		</div>
-	)
+	);
 }
