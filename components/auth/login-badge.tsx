@@ -12,11 +12,10 @@ import {
 import { CircleUser, LogOut } from "lucide-react";
 import type { User } from "next-auth";
 import Link from "next/link";
+import { LineMdCogLoop } from "../icons";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import LoginButton from "./login-button";
 import LogoutButton from "./logout-button";
-import { LineMdCogLoop } from "../icons";
-
 
 type Props = {
 	user?: User;
@@ -39,9 +38,10 @@ const LoginBadge = ({ user }: Props) => {
 						<DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem>
-
-							<Link href="/auth/settings" className="flex flex-1 justify-start items-center"><LineMdCogLoop className="mr-2" />Perfil</Link>
-
+							<Link href="/auth/settings" className="flex flex-1 justify-start items-center">
+								<LineMdCogLoop className="mr-2" />
+								Perfil
+							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<LogoutButton>
@@ -52,15 +52,13 @@ const LoginBadge = ({ user }: Props) => {
 							</DropdownMenuItem>
 						</LogoutButton>
 					</DropdownMenuContent>
-				</DropdownMenu >
+				</DropdownMenu>
 			)}
-			{
-				!user && (
-					<LoginButton>
-						<Button variant={"default"}>Entrar</Button>
-					</LoginButton>
-				)
-			}
+			{!user && (
+				<LoginButton>
+					<Button variant={"default"}>Entrar</Button>
+				</LoginButton>
+			)}
 		</>
 	);
 };

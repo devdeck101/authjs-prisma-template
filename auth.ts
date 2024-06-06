@@ -30,7 +30,11 @@ export const {
 			}
 			return true;
 		},
-		async jwt({ token, user }) {
+		async jwt({ token, user, trigger, session }) {
+			if (trigger && trigger === "update" && session) {
+				token.isTwoFactorEnabled = session.user.isTwoFactorEnabled;
+				return token;
+			}
 			if (user) {
 				// User is available during sign-in
 				if (user.id) {

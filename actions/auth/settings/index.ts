@@ -62,8 +62,9 @@ export const changeSettings = async (settings: z.infer<typeof UserSettingsSchema
 			},
 		});
 
-		update({
+		await update({
 			user: {
+				...session.user,
 				name: updatedUser.name,
 				isTwoFactorEnabled: updatedUser.isTwoFactorAuthEnabled,
 				//TODO: Add fields to chande roles and or e-mail for the user????
