@@ -1,11 +1,8 @@
-
-
-
 # Pronto para Autenticar Seu Novo Projeto
 
 Este Starter Kit foi desenvolvido para poupar seu tempo, oferecendo tudo o que você precisa para começar a desenvolver seu projeto com segurança.
 
-![GitHub last commit](https://img.shields.io/github/last-commit/devdeck101/authjs-prisma-template) ![GitHub forks](https://img.shields.io/github/forks/devdeck101/authjs-prisma-template) ![GitHub Repo stars](https://img.shields.io/github/stars/devdeck101/authjs-prisma-template) ![GitHub watchers](https://img.shields.io/github/watchers/devdeck101/authjs-prisma-template) 
+![GitHub last commit](https://img.shields.io/github/last-commit/devdeck101/authjs-prisma-template) ![GitHub forks](https://img.shields.io/github/forks/devdeck101/authjs-prisma-template) ![GitHub Repo stars](https://img.shields.io/github/stars/devdeck101/authjs-prisma-template) ![GitHub watchers](https://img.shields.io/github/watchers/devdeck101/authjs-prisma-template)
 
 <div class="display:grid">
 <img src="assets/landing_page.jpg" alt="drawing" width="400"/>
@@ -16,13 +13,11 @@ Este Starter Kit foi desenvolvido para poupar seu tempo, oferecendo tudo o que v
 <img src="assets/light_landing_page.jpg" alt="drawing" width="400"/>
 </div>
 
-
 ## <img src="assets/wave.gif" alt="drawing" width="20"/> Detalhes Explicados no Meu Canal
+
 [![Youtube Badge](https://img.shields.io/badge/-@developerdeck101-cc181e?style=flat-square&logo=youtube&logoColor=white&link=https://www.youtube.com/developerdeck101)](https://www.youtube.com/developerdeck101)
 ![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCj75B_51OXb9qH15wiHs-Hw?style=social)
 ![YouTube Channel Views](https://img.shields.io/youtube/channel/views/UCj75B_51OXb9qH15wiHs-Hw)
-
-
 
 Este é um template de projeto de autenticação e autorização implementado em [Next.js](https://nextjs.org/) e [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 Foi incluído a inicialização com [Shadcn-ui](https://ui.shadcn.com/), prisma [Prisma](https://www.prisma.io/), Authjs | Next-Auth [Authjs](https://authjs.dev/) utilizando banco de dados [PostgreSQL](https://www.postgresql.org/)
@@ -39,12 +34,6 @@ Foi incluído a inicialização com [Shadcn-ui](https://ui.shadcn.com/), prisma 
 ![Static Badge](https://img.shields.io/badge/-REACTEMAIL-REACTEMAIL?labelColor=000000&color=000000)
 ![Static Badge](https://img.shields.io/badge/-SHADCNUI-SHADCNUI?labelColor=000000&color=000000)
 ![Static Badge](https://img.shields.io/badge/-Prisma-Prisma?logo=prisma&logoColor=%23000000&labelColor=%230000&color=%23ffffff)
-
-
-
-
-
-
 
 ## Getting Started
 
@@ -64,7 +53,6 @@ npm install
 
 O banco de dados utilizado é o PostgreSQL. Você precisará de uma instância dele para executar o projeto. Um arquivo docker-compose.yml está incluído para facilitar a execução de um container Docker.
 
-
 ### Container Docker - Docker Compose
 
 Na raiz do projeto, há um arquivo docker-compose.yml com a configuração para um banco de dados PostgreSQL.
@@ -83,12 +71,12 @@ Para finalizar o serviço:
 docker compose down postgres
 ```
 
-
 ## Configuração de Envio de E-Mail
 
 É necessário se cadastrar no [RESEND](https://resend.com/) e criar uma chave de API para envios de email, incluindo verificação de usuário, autenticação de dois fatores e mudança de senha.
 
 ### RESEND API KEY
+
 Após logar na sua conta, siga as instruções na imagem abaixo:
 
 ![image](assets/resend-api-key.jpg)
@@ -98,12 +86,14 @@ Após logar na sua conta, siga as instruções na imagem abaixo:
 Renomeie o arquivo .env.example para .env. Depois, modifique as variáveis de ambiente conforme necessário:
 
 Váriável do banco de dados:
+
 ```bash
 # Exemplo utilizando o container Docker disponível
 DATABASE_URL="postgresql://developerdeck101:developerdeck101@127.0.0.1:5432/test"
 # Ou personalize com suas próprias configurações
 DATABASE_URL="postgresql://<user>:<password>@<url>:<port>/<db_name>"
 ```
+
 Variável de encriptação do token JWT:
 
 ```bash
@@ -113,14 +103,14 @@ AUTH_SECRET=314FUJnJeO1zGfxpxbmqqxQsBiCl/NwOyJ9AONpG03Y=
 Para gerar a chave AUTH_SECRET, utilize o comando:
 
 ```bash
-# Unix 
+# Unix
 openssl rand -base64 32
 ```
 
 ou
 
 ```bash
-# Windows 
+# Windows
 npm exec auth secret
 ```
 
@@ -134,8 +124,8 @@ Para criar as tabelas do banco de dados, é possível executar os comandos do Pr
 
 [![Static Badge](https://img.shields.io/badge/-discord-Discord?logo=Discord&labelColor=5e90ee&color=%23ffff)](http://discord.gg/GXQAVzn4Vn)
 
-
 ## Tabelas do Banco de Dados
+
 Para criar as tabelas do banco de dados, é possível executar os comandos do Prisma ou scripts do projeto.
 
 ### Comandos Prisma
@@ -172,10 +162,12 @@ npm run studio
 ## Para inicializar o projeto
 
 ### Modo Desenvolvimento
+
 ```bash
 # Executar o Projeto
 npm run dev
 ```
+
 ### Modo Produção
 
 ```bash
@@ -190,9 +182,52 @@ npm run start
 
 Abrir [http://localhost:3000](http://localhost:3000) com seu navegador.
 
+## Configuração de Rotas
+
+A configuração das rotas de middleware é realizada no arquivo de configuração config/routes/index.ts.
+
+```JavaScript
+import { ConfigRoutes } from "@/types/routes";
+
+export const configRoutes: ConfigRoutes = {
+  publicRoutes: [
+    "/",
+    "/auth/login",
+    "/auth/register",
+    "/auth/change-password",
+    "/auth/reset-password",
+    "/auth/verify-email",
+  ],
+  authRoutes: ["/api/auth/signin"],
+  apiRoutes: ["/api/protected-api"],
+  protectedRoutes: ["/auth/settings"],
+};
+```
+
+Para customizar conforme sua necessidade, utilize a função `createRouteMatchers` do arquivo `lib/route/index.ts` dentro do middleware.ts conforme exemplo abaixo:
+
+```JavaScript
+export default auth((req) => {
+  const { isPublicRoute, isProtectedRoute, isApiRoute, isAuthRoute } =
+    createRouteMatchers(configRoutes, req);
+  const { nextUrl } = req;
+  const isLoggedIn = !!req.auth;
+  console.log(`Public: ${isPublicRoute}`);
+  console.log(`Protected: ${isProtectedRoute}`);
+  console.log(`Api: ${isApiRoute}`);
+  console.log(`Auth: ${isAuthRoute}`);
+  if (isProtectedRoute && !isLoggedIn) {
+    return NextResponse.redirect(new URL("/auth/login", req.url));
+  }
+
+  // console.log(`Middleware: ${req.nextUrl.pathname}`);
+});
+```
+
 # Não se esqueça
 
 ## Siga-me nas Redes Sociais <img src="assets/wave.gif" alt="drawing" width="20"/>
+
 [![Youtube Badge](https://img.shields.io/badge/-@developerdeck101-darkred?style=flat-square&logo=youtube&logoColor=white&link=https://www.youtube.com/developerdeck101)](https://www.youtube.com/developerdeck101)
 [![Instagram Badge](https://img.shields.io/badge/-developerdeck101_-purple?style=flat-square&logo=instagram&logoColor=white&link=https://instagram.com/developerdeck101_/)](https://instagram.com/developerdeck101_)
 [![Linkedin Badge](https://img.shields.io/badge/-Bruno_Kilian-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/brunokilian)](https://www.linkedin.com/in/brunokilian)
@@ -204,6 +239,3 @@ Abrir [http://localhost:3000](http://localhost:3000) com seu navegador.
 [![Youtube Badge](https://img.shields.io/badge/-Membros_do_Canal-darkred?style=flat-square&logo=youtube&logoColor=white&link=https://www.youtube.com/channel/UCj75B_51OXb9qH15wiHs-Hw/join)](https://www.youtube.com/channel/UCj75B_51OXb9qH15wiHs-Hw/join)
 [![Static Badge](https://img.shields.io/badge/LivePix-Apoie_o_Canal_e_Projeto-blue?logo=Livepix&logoColor=%23ffffff&labelColor=blue&color=%23ffffff)](https://livepix.gg/brkilian)
 [![Static Badge](https://img.shields.io/badge/LivePix_QR_CODE-Apoie_o_Canal_e_Projeto-blue?logo=Livepix&logoColor=%23ffffff&labelColor=blue&color=%23ffffff)](https://widget.livepix.gg/embed/80b6ae11-d611-464b-b3f0-2db50d84d6ee)
-
-
-

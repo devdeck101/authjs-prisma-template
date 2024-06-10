@@ -51,7 +51,7 @@
 		"zod": "^3.23.4"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.7.3",
+		"@biomejs/biome": "^1.7.3",
 		"@types/bcryptjs": "^2.4.6",
 		"@types/node": "^20",
 		"@types/react": "^18",
