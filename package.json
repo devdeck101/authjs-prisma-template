@@ -7,9 +7,9 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"clear-db": "prisma migrate reset -f",
-		"push-db": "prisma db push --force-reset --accept-data-loss",
-		"studio": "prisma studio",
+		"db:clear": "prisma migrate reset -f",
+		"db:push": "prisma db push --force-reset --accept-data-loss",
+		"db:studio": "prisma studio",
 		"postinstall": "prisma generate",
 		"biome-lint": "npx @biomejs/biome lint ./",
 		"biome-lint-apply": "npx @biomejs/biome lint ./ --apply",
@@ -21,7 +21,7 @@
 	"dependencies": {
 		"@auth/prisma-adapter": "^2.0.0",
 		"@hookform/resolvers": "^3.3.4",
-		"@prisma/client": "^5.13.0",
+		"@prisma/client": "^5.16.1",
 		"@radix-ui/react-avatar": "^1.0.4",
 		"@radix-ui/react-checkbox": "^1.0.4",
 		"@radix-ui/react-dialog": "^1.0.5",
@@ -34,6 +34,7 @@
 		"bcryptjs": "^2.4.3",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
+		"framer-motion": "^11.2.12",
 		"input-otp": "^1.2.4",
 		"lucide-react": "^0.376.0",
 		"next": "14.2.3",
@@ -60,7 +61,7 @@
 		"eslint": "^8",
 		"eslint-config-next": "14.2.3",
 		"postcss": "^8",
-		"prisma": "^5.13.0",
+		"prisma": "^5.16.1",
 		"tailwindcss": "^3.4.1",
 		"typescript": "^5"
 	}

@@ -9,7 +9,7 @@ const Navbar = async () => {
 	const session = await auth();
 	return (
 		<>
-			<nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+			<nav className="hidden flex-col  gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
 				<Link href="#" className="flex items-center gap-2 text-lg font-semibold md:text-base">
 					<Fingerprint className="h-6 w-6 text-green-500" />
 					<span className="sr-only">DeveloperDeck101 - Authjs</span>
@@ -28,6 +28,12 @@ const Navbar = async () => {
 				</Link>
 				<Link href="#" className="text-muted-foreground transition-colors hover:text-foreground">
 					Middleware
+				</Link>
+				<Link
+					href="/example/multi-step-form/campaign"
+					className="text-muted-foreground transition-colors hover:text-foreground min-w-fit z-50"
+				>
+					Multi-Step-Form
 				</Link>
 			</nav>
 			<div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">

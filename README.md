@@ -11,6 +11,7 @@ Este Starter Kit foi desenvolvido para poupar seu tempo, oferecendo tudo o que v
 <img src="assets/dois_fatores_page.jpg" alt="drawing" width="400"/>
 <img src="assets/forget_password_page.jpg" alt="drawing" width="400"/>
 <img src="assets/light_landing_page.jpg" alt="drawing" width="400"/>
+<img src="assets/multi-step-form.jpg" alt="drawing" width="400"/>
 </div>
 
 ## <img src="assets/wave.gif" alt="drawing" width="20"/> Detalhes Explicados no Meu Canal
@@ -146,17 +147,17 @@ npx prisma db push
 
 ```bash
 # Cria as tabelas no banco de dados
-npm run push-db
+npm run db:push
 ```
 
 ```bash
 # Limpa o banco de dados
-npm run clear-db
+npm run db:clear
 ```
 
 ```bash
 # Abre o Prisma Studio
-npm run studio
+npm run db:studio
 ```
 
 ## Para inicializar o projeto
@@ -223,6 +224,25 @@ export default auth((req) => {
   // console.log(`Middleware: ${req.nextUrl.pathname}`);
 });
 ```
+
+## Formulário Multi-Step (Fluxo Guiado) 🔥
+
+Foi adicionado a definição para criação de fluxos genéricos guiados de usuário para captura de informações em vários passos e de forma guiada.
+
+### O exemplo para criação do Fluxo Guiado esta na pasta abaixo
+
+```bash
+app\example\multi-step-form
+```
+
+Para aprender como foi desenvolvido nos detalhes, você pode ver o seguinte vídeo onde mostro cada passo do desenvolvimento.
+
+[🔥🔥🔥NEXTJS SAAS - DIA 3 - MULTI-STEP-FORM GENÉRICO🔥🔥🔥](https://youtube.com/live/-QB9fkcCdbk?feature=share)
+
+[<img src="assets/SASS_DAY_3_Multi-Step-Form.jpg" alt="drawing" width="330"/>](https://youtube.com/live/-QB9fkcCdbk?feature=share)
+
+
+
 
 # Não se esqueça
 
