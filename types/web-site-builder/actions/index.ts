@@ -39,4 +39,4 @@ type EditorAction = AddElement | UpdateElement | DeleteElement | SelectElement;
 
 type EditorActionReducer = (state: EditorState, action: EditorAction) => EditorState;
 
-export { type EditorAction, ActionType, type EditorActionReducer };
+export { ActionType, type AddElement, type EditorAction, type EditorActionReducer };

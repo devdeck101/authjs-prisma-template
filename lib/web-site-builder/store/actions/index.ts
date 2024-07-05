@@ -3,9 +3,22 @@ import { ActionType, type EditorAction, type EditorActionReducer } from "@/types
 
 const editorActionReducer: EditorActionReducer = (state: EditorState, action: EditorAction): EditorState => {
 	switch (action.type) {
-		case ActionType.AddElement:
-			console.log(action);
-			return state;
+		case ActionType.AddElement: {
+			// console.log("<==State");
+			// console.log(state);
+			// console.log("State==>");
+			const newElement = action.data.element;
+			const newState: EditorState = {
+				editor: {
+					...state.editor,
+					elements: [...state.editor.elements, newElement],
+				},
+			};
+			// console.log("<==New State");
+			// console.log(newState);
+			// console.log("New State==>");
+			return newState;
+		}
 		case ActionType.SelectElement:
 			console.log(action);
 			return state;

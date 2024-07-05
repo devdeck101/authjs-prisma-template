@@ -21,12 +21,14 @@ enum ElementType {
 }
 
 interface Element {
+	constructor: () => Element;
 	id: string;
 	type: ElementType;
 	content?: Element[];
 	styles?: React.CSSProperties;
 	customAttributes: Record<string, AllowedProperties>;
 	metadata?: Metadata;
+	elementButton: ElementButton;
 
 	previewComponent: React.FC<{ instance: Element }>;
 	editComponent: React.FC<{ instance: Element }>;
@@ -57,4 +59,4 @@ type ElementTypes = {
 	[K in ElementType]: Element;
 };
 
-export { ElementType, type Element, type ElementTypes, type EditorState, DeviceMode, PreviewMode };
+export { DeviceMode, ElementType, PreviewMode, type EditorState, type Element, type ElementButton, type ElementTypes };

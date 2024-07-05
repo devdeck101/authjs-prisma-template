@@ -1,4 +1,4 @@
-import { WebsiteBuilderContext } from "@/app/example/web-site-builder/compaign-hot-page/_components/web-site-builder-campaign-config";
+import { WebsiteBuilderContext } from "@/app/example/web-site-builder/campaign-hot-page/_components/web-site-builder-campaign-config";
 import { useContext } from "react";
 
 const useWebsiteBuilder = () => {
