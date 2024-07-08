@@ -17,6 +17,12 @@ const Navbar = async () => {
 				<Link href="#" className="text-foreground transition-colors hover:text-foreground">
 					HOME
 				</Link>
+				<Link
+					href="/docs"
+					className="text-muted-foreground transition-colors hover:text-foreground min-w-fit z-50"
+				>
+					Docs
+				</Link>
 				<Link href="#" className="text-muted-foreground transition-colors hover:text-foreground">
 					Servidor
 				</Link>
@@ -35,6 +41,13 @@ const Navbar = async () => {
 				>
 					Multi-Step-Form
 				</Link>
+				<Link
+					href="/example/web-site-builder/campaign"
+					className="text-muted-foreground transition-colors hover:text-foreground min-w-fit z-50"
+				>
+					Website Builder
+				</Link>
+
 			</nav>
 			<div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
 				<form className="ml-auto flex-1 sm:flex-initial">
