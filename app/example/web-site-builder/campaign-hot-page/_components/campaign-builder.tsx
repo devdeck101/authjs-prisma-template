@@ -1,26 +1,9 @@
 "use client";
 
-import Link from "next/link";
-
-import Main from "@/components/web-site-builder/main";
-import SidebarModules from "@/components/web-site-builder/sidebar-modules";
-import Page from "@/components/web-site-builder/page";
-
-
+import WebsiteBuilder from "@/components/web-site-builder";
 
 const CampaignBuilder = () => {
+	return <WebsiteBuilder />;
+};
 
-    // const { state, dispatch } = useWebsiteBuilder();
-
-    return (
-        (
-            <Page>
-                <Main />
-                <SidebarModules />
-            </Page>
-
-        )
-    )
-}
-
-export default CampaignBuilder
+export default CampaignBuilder;

@@ -3,7 +3,7 @@ type AllowedProperties = string | number | boolean;
 interface Metadata {
 	[Key: string]: AllowedProperties;
 }
-// type DeviceMode = "Mobile" | "Tablet" | "Desktop"
+
 enum DeviceMode {
 	Mobile = "Mobile",
 	Tablet = "Tablet",
@@ -20,6 +20,10 @@ enum ElementType {
 	TextElement = "TextElement",
 }
 
+interface ElementProps extends React.HTMLAttributes<HTMLDivElement> {
+	instance: Element;
+}
+
 interface Element {
 	constructor: () => Element;
 	id: string;
@@ -30,9 +34,9 @@ interface Element {
 	metadata?: Metadata;
 	elementButton: ElementButton;
 
-	previewComponent: React.FC<{ instance: Element }>;
-	editComponent: React.FC<{ instance: Element }>;
-	liveComponent: React.FC<{ instance: Element }>;
+	previewComponent: React.FC<ElementProps>;
+	editComponent: React.FC<ElementProps>;
+	liveComponent: React.FC<ElementProps>;
 }
 
 interface ElementButton {
@@ -59,4 +63,13 @@ type ElementTypes = {
 	[K in ElementType]: Element;
 };
 
-export { DeviceMode, ElementType, PreviewMode, type EditorState, type Element, type ElementButton, type ElementTypes };
+export {
+	DeviceMode,
+	ElementType,
+	PreviewMode,
+	type EditorState,
+	type Element,
+	type ElementButton,
+	type ElementProps,
+	type ElementTypes,
+};

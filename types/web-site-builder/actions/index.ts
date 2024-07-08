@@ -4,11 +4,12 @@ enum ActionType {
 	UpdateElement = "UpdateElement",
 	DeleteElement = "DeleteElement",
 	SelectElement = "SelectElement",
+	UnselectElement = "UnselectElement",
 }
 
 interface AddElement {
 	type: ActionType.AddElement;
-	data: {
+	payload: {
 		containerId?: string;
 		element: Element;
 	};
@@ -16,27 +17,39 @@ interface AddElement {
 
 interface UpdateElement {
 	type: ActionType.UpdateElement;
-	data: {
+	payload: {
 		element: Element;
 	};
 }
 
 interface DeleteElement {
 	type: ActionType.DeleteElement;
-	data: {
+	payload: {
 		elementId: string;
 	};
 }
 
 interface SelectElement {
 	type: ActionType.SelectElement;
-	data: {
+	payload: {
 		element: Element;
 	};
 }
 
-type EditorAction = AddElement | UpdateElement | DeleteElement | SelectElement;
+interface UnselectElement {
+	type: ActionType.UnselectElement;
+}
+type EditorAction = AddElement | UpdateElement | DeleteElement | SelectElement | UnselectElement;
 
 type EditorActionReducer = (state: EditorState, action: EditorAction) => EditorState;
 
-export { ActionType, type AddElement, type EditorAction, type EditorActionReducer };
+export {
+	ActionType,
+	type AddElement,
+	type DeleteElement,
+	type EditorAction,
+	type EditorActionReducer,
+	type SelectElement,
+	type UnselectElement,
+	type UpdateElement,
+};

@@ -11,5 +11,9 @@ export const configRoutes: ConfigRoutes = {
 	],
 	authRoutes: ["/api/auth/signin"],
 	apiRoutes: ["/api/protected-api"],
-	protectedRoutes: ["/auth/settings", "/example/multi-step-form/campaign"],
+	protectedRoutes: [
+		"/auth/settings",
+		"/example/multi-step-form/campaign",
+		"/example/web-site-builder/campaign-hot-page",
+	],
 };
