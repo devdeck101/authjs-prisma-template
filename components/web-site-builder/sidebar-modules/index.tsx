@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const SidebarModules = () => {
 	return (
-		<div className="fixed right-0 z-10 h-full w-14 border-r border-t border-b bg-background sm:static sm:w-auto">
+		<div className="hidden md:block fixed right-0 z-10 h-full w-14 border-r border-t border-b bg-background sm:static sm:w-auto">
 			<div className="flex h-full flex-col items-center gap-4 px-2 py-5">
 				<TooltipProvider>
 					<Tooltip>

@@ -6,7 +6,7 @@ import { CloudUpload, Eye, Save } from "lucide-react";
 import Preview from "../../preview";
 const SidebarActions = () => {
 	return (
-		<div className="flex flex-row items-center justify-around border rounded-lg">
+		<div className="flex flex-row w-full items-center justify-around border rounded-lg">
 			<TooltipProvider>
 				<Tooltip>
 					<TooltipTrigger asChild>

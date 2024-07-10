@@ -18,6 +18,7 @@ enum PreviewMode {
 
 enum ElementType {
 	TextElement = "TextElement",
+	ContainerElement = "ContainerElement",
 }
 
 interface ElementProps extends React.HTMLAttributes<HTMLDivElement> {

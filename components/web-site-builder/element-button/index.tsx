@@ -19,11 +19,11 @@ const ElementButton = ({ element }: Props) => {
 
 	return (
 		<Button
-			className="flex items-center justify-center cursor-grab h-20 w-20 gap-2 rounded-lg bg-accent px-3 py-2 text-accent-foreground transition-colors hover:bg-accent/90"
+			className="flex flex-col items-center justify-center text-xs cursor-grab h-20 w-20 gap-2 rounded-lg bg-accent px-3 py-2 text-accent-foreground transition-colors hover:bg-accent/90"
 			draggable="true"
 			onDragStart={onDragStart}
 		>
-			<Icon className="h-8 w-5" />
+			<Icon className="h-4 w-4" />
 			{label}
 		</Button>
 	);

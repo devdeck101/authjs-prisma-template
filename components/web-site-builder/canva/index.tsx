@@ -3,7 +3,7 @@
 import { useWebsiteBuilder } from "@/hooks/web-site-builder";
 import { cn } from "@/lib/utils";
 import { ElementImpl } from "@/lib/web-site-builder/elements";
-import type { Element } from "@/types/web-site-builder";
+import type { ElementType, Element } from "@/types/web-site-builder";
 import { ActionType, type AddElement, type SelectElement } from "@/types/web-site-builder/actions";
 import { useState } from "react";
 
@@ -29,13 +29,15 @@ const Canvas = () => {
 	const onDrop = (e: React.DragEvent) => {
 		e.preventDefault();
 		// e.stopPropagation();
-		const data = e.dataTransfer.getData("elementType");
+		// const data = e.dataTransfer.getData("elementType");
+		const data: keyof typeof ElementType = e.dataTransfer.getData("elementType") as keyof typeof ElementType;
 		const myAddAction: AddElement = {
 			type: ActionType.AddElement,
 			payload: {
-				element: ElementImpl.TextElement.constructor(),
+				element: ElementImpl[data].constructor(),
 			},
 		};
+
 		dispatch(myAddAction);
 		setOver(false);
 	};
@@ -59,13 +61,14 @@ const Canvas = () => {
 			onDrop={onDrop}
 		>
 			{state.editor.elements.map((element) => {
+				//TODO: Refactor to change it to a recursive function or components
 				const PreviewComponent = element.previewComponent;
 				return (
 					<PreviewComponent
 						onClick={() => handleElementClick(element)}
 						key={element.id}
 						instance={element}
-						// className="m-2 p-2 rounded-lg border border-transparent hover:border-green-500"
+					// className="m-2 p-2 rounded-lg border border-transparent hover:border-green-500"
 					/>
 				);
 			})}
