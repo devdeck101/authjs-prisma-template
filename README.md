@@ -12,6 +12,7 @@ Este Starter Kit foi desenvolvido para poupar seu tempo, oferecendo tudo o que v
 <img src="assets/forget_password_page.jpg" alt="drawing" width="400"/>
 <img src="assets/light_landing_page.jpg" alt="drawing" width="400"/>
 <img src="assets/multi-step-form.jpg" alt="drawing" width="400"/>
+<img src="assets/docs.jpg" alt="drawing" width="400"/>
 </div>
 
 ## <img src="assets/wave.gif" alt="drawing" width="20"/> Detalhes Explicados no Meu Canal
