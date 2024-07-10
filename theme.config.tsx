@@ -7,7 +7,7 @@ const config: DocsThemeConfig = {
         link: 'https://github.com/devdeck101/authjs-prisma-template',
     },
     chat: {
-        link: 'discord.gg/GXQAVzn4Vn',
+        link: 'https://discord.gg/GXQAVzn4Vn',
     },
     docsRepositoryBase: 'https://github.com/devdeck101/authjs-prisma-template',
     footer: {

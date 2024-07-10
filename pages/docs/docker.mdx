@@ -1,0 +1,22 @@
+---
+title: Docker
+description: Utilização do Banco de Dados com container
+---
+
+# Container Docker - Docker Compose
+
+Na raiz do projeto, há um arquivo docker-compose.yml com a configuração para um banco de dados PostgreSQL.
+
+Caso não tenha o docker instalado, pode encontrá-lo aqui [Get Docker](https://docs.docker.com/get-docker/).
+
+Para inicializar o container:
+
+```bash
+docker compose up -d
+```
+
+Para finalizar o serviço:
+
+```bash
+docker compose down postgres
+```

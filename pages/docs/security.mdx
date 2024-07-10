@@ -1,0 +1,46 @@
+---
+title: Segurança
+description: Como configurar a Segurança
+---
+
+# Configuração de Rotas
+
+A configuração das rotas de middleware é realizada no arquivo de configuração config/routes/index.ts.
+
+```javascript
+import { ConfigRoutes } from "@/types/routes";
+
+export const configRoutes: ConfigRoutes = {
+  publicRoutes: [
+    "/",
+    "/auth/login",
+    "/auth/register",
+    "/auth/change-password",
+    "/auth/reset-password",
+    "/auth/verify-email",
+  ],
+  authRoutes: ["/api/auth/signin"],
+  apiRoutes: ["/api/protected-api"],
+  protectedRoutes: ["/auth/settings"],
+};
+```
+
+Para customizar conforme sua necessidade, utilize a função `createRouteMatchers` do arquivo `lib/route/index.ts` dentro do middleware.ts conforme exemplo abaixo:
+
+```javascript
+export default auth((req) => {
+  const { isPublicRoute, isProtectedRoute, isApiRoute, isAuthRoute } =
+    createRouteMatchers(configRoutes, req);
+  const { nextUrl } = req;
+  const isLoggedIn = !!req.auth;
+  console.log(`Public: ${isPublicRoute}`);
+  console.log(`Protected: ${isProtectedRoute}`);
+  console.log(`Api: ${isApiRoute}`);
+  console.log(`Auth: ${isAuthRoute}`);
+  if (isProtectedRoute && !isLoggedIn) {
+    return NextResponse.redirect(new URL("/auth/login", req.url));
+  }
+
+  // console.log(`Middleware: ${req.nextUrl.pathname}`);
+});
+```

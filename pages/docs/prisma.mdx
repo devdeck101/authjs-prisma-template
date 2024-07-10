@@ -1,0 +1,43 @@
+---
+title: Prisma
+description: Tabelas do ORM
+---
+
+Para criar as tabelas do banco de dados, é possível executar os comandos do Prisma ou scripts do projeto.
+
+[![Static Badge](https://img.shields.io/badge/-discord-Discord?logo=Discord&labelColor=5e90ee&color=%23ffff)](http://discord.gg/GXQAVzn4Vn)
+
+## Tabelas do Banco de Dados
+
+Para criar as tabelas do banco de dados, é possível executar os comandos do Prisma ou scripts do projeto.
+
+### Comandos Prisma
+
+Execute o comando:
+
+```bash
+npx prisma migrate dev
+```
+
+ou
+
+```bash
+npx prisma db:push
+```
+
+### Scripts disponíveis
+
+```bash
+# Cria as tabelas no banco de dados
+npm run db:push
+```
+
+```bash
+# Limpa o banco de dados
+npm run db:clear
+```
+
+```bash
+# Abre o Prisma Studio
+npm run db:studio
+```

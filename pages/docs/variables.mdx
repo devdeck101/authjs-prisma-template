@@ -1,0 +1,43 @@
+---
+title: Variáveis
+description: Configuração de Variáveis
+---
+
+# Variáveis de Ambiente
+
+Renomeie o arquivo `.env.example` para `.env.` Depois, modifique as variáveis de ambiente conforme necessário:
+
+Váriável do banco de dados:
+
+```bash
+# Exemplo utilizando o container Docker disponível
+DATABASE_URL="postgresql://developerdeck101:developerdeck101@127.0.0.1:5432/test"
+# Ou personalize com suas próprias configurações
+DATABASE_URL="postgresql://<user>:<password>@<url>:<port>/<db_name>"
+```
+
+Variável de encriptação do token JWT:
+
+```bash
+AUTH_SECRET=314FUJnJeO1zGfxpxbmqqxQsBiCl/NwOyJ9AONpG03Y=
+```
+
+Para gerar a chave AUTH_SECRET, utilize o comando:
+
+```bash
+# Unix
+openssl rand -base64 32
+```
+
+ou
+
+```bash
+# Windows
+npm exec auth secret
+```
+
+Caso deseje executar em modo produção npm run start, será necessário descomentar a variável:
+
+```bash
+AUTH_TRUST_HOST=true
+```
