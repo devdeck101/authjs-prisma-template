@@ -27,8 +27,7 @@ export default function LoginForm() {
 	const [success, setSuccess] = useState<string>("");
 	const [showOTPForm, setShowOTP] = useState<boolean>(false);
 	const searchParams = useSearchParams();
-	const callbackError =
-		searchParams.get("error") === "OAuthAccountNotLinked" ? "E-mail em uso com provedor diferente" : undefined;
+	const callbackError = searchParams ? searchParams.get("error") === "OAuthAccountNotLinked" ? "E-mail em uso com provedor diferente" : undefined : undefined;
 	const form = useForm<z.infer<typeof CredentialsSchema>>({
 		resolver: zodResolver(CredentialsSchema),
 		defaultValues: {

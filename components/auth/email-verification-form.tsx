@@ -8,8 +8,9 @@ import AuthFormMessage from "./auth-form-message";
 const EmailVerificationForm = () => {
 	const [error, setError] = useState<string | undefined>(undefined);
 	const [success, setSuccess] = useState<string | undefined>(undefined);
-	const searchParam = useSearchParams();
-	const token = searchParam.get("token");
+	const searchParams = useSearchParams();
+	if (!searchParams || !searchParams.has("token")) return null;
+	const token = searchParams.get("token");
 
 	const automaticSubmission = useCallback(() => {
 		if (error || success) return;

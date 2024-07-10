@@ -20,8 +20,11 @@ export const ChangePasswordForm = () => {
 	const [error, setError] = useState<string | undefined>("");
 	const [success, setSuccess] = useState<string | undefined>("");
 	const [isPending, startTransition] = useTransition();
-	const searchParam = useSearchParams();
-	const token = searchParam.get("token");
+	const searchParams = useSearchParams();
+	if (!searchParams || !searchParams.has("token")) return null;
+
+	const token = searchParams.get("token");
+
 
 	const form = useForm<z.infer<typeof NewPasswordSchema>>({
 		resolver: zodResolver(NewPasswordSchema),
