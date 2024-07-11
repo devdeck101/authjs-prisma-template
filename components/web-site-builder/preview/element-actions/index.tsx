@@ -24,13 +24,15 @@ const ElementActions = ({ children, elementId }: Props) => {
         dispatch(myDeleteAction);
     };
     return (
-        <div className={cn("relative w-full group")}>
-            <div className="absolute right-0 top-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <Button variant={"outline"} size={"icon"} onClick={() => handleDeleteElement(elementId)}>
-                    <Trash className="m-0 p-0 w-4 h-4" />
-                </Button>
+        <div className={cn(" w-full")}>
+            <div className={cn("relative w-full group")}>
+                <div className="absolute right-0 top-0 -translate-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Button variant={"action"} size={"action"} onClick={() => handleDeleteElement(elementId)}>
+                        <Trash className="w-4 h-4" />
+                    </Button>
+                </div>
+                {children}
             </div>
-            {children}
         </div>
     )
 }
