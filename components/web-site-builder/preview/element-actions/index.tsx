@@ -27,7 +27,10 @@ const ElementActions = ({ children, elementId }: Props) => {
         <div className={cn(" w-full")}>
             <div className={cn("relative w-full group")}>
                 <div className="absolute right-0 top-0 -translate-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Button variant={"action"} size={"action"} onClick={() => handleDeleteElement(elementId)}>
+                    <Button variant={"action"} size={"action"} onClick={() => {
+                        alert(`Delete ${elementId}`)
+                        handleDeleteElement(elementId)
+                    }}>
                         <Trash className="w-4 h-4" />
                     </Button>
                 </div>

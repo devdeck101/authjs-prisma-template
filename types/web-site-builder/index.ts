@@ -1,3 +1,5 @@
+import type { PropsWithChildren } from "react";
+
 type AllowedProperties = string | number | boolean;
 
 interface Metadata {
@@ -21,7 +23,7 @@ enum ElementType {
 	ContainerElement = "ContainerElement",
 }
 
-interface ElementProps extends React.HTMLAttributes<HTMLDivElement> {
+interface ElementProps extends React.HTMLAttributes<HTMLDivElement>, PropsWithChildren {
 	instance: Element;
 }
 

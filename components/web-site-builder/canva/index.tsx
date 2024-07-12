@@ -27,8 +27,7 @@ const Canvas = () => {
 	};
 
 	const onDrop = (e: React.DragEvent) => {
-		e.preventDefault();
-		// e.stopPropagation();
+		e.stopPropagation();
 		// const data = e.dataTransfer.getData("elementType");
 		const data: keyof typeof ElementType = e.dataTransfer.getData("elementType") as keyof typeof ElementType;
 		const myAddAction: AddElement = {
@@ -52,26 +51,28 @@ const Canvas = () => {
 		dispatch(mySelectAction);
 	};
 
+	//TODO: MousePointer on elements
 	return (
 		<div
-			className={cn("flex flex-col items-center justify-start flex-1", over ? "border border-green-500" : "")}
+			className={cn("flex flex-col items-center justify-start flex-1 cursor-pointer", over ? "border border-green-500" : "")}
 			onDragOver={onDragOver}
 			onDragLeave={onDragLeave}
 			onDragEnd={onDragEnd}
 			onDrop={onDrop}
 		>
 			{state.editor.elements.map((element) => {
-				//TODO: Refactor to change it to a recursive function or components
 				const PreviewComponent = element.previewComponent;
 				return (
 					<PreviewComponent
-						onClick={() => handleElementClick(element)}
+						onClick={(e: React.MouseEvent) => {
+							handleElementClick(element)
+						}}
 						key={element.id}
 						instance={element}
-					// className="m-2 p-2 rounded-lg border border-transparent hover:border-green-500"
 					/>
 				);
 			})}
+
 		</div>
 	);
 };

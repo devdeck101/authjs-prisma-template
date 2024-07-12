@@ -59,7 +59,7 @@ function PreviewComponent({ instance, className, ...rest }: ElementProps) {
 					"border-green-500": !!selectedElement && instance.id === selectedElement.id,
 				})}
 			>
-				{text}
+				{instance.id}-{text}
 			</div>
 		</ElementActions>
 

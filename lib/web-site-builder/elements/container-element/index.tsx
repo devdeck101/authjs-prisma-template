@@ -1,6 +1,12 @@
-import { type Element, type ElementButton, ElementType } from "@/types/web-site-builder";
+import ElementActions from "@/components/web-site-builder/preview/element-actions";
+import { cn } from "@/lib/utils";
+import { type Element, type ElementButton, type ElementProps, ElementType } from "@/types/web-site-builder";
+import { ActionType, type AddElement, type SelectElement } from "@/types/web-site-builder/actions";
+import { ElementImpl } from "@/lib/web-site-builder/elements";
 import { BoxSelect } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
+import { useWebsiteBuilder } from "@/hooks/web-site-builder";
+import { useState } from "react";
 
 const type: ElementType = ElementType.ContainerElement;
 const customAttributes = {
@@ -21,9 +27,107 @@ const ContainerElement: Element = {
     type,
     customAttributes,
     elementButton,
-    previewComponent: () => <div>Placeholder</div>,
+    previewComponent: previewComponent,
     editComponent: () => <div>Placeholder</div>,
     liveComponent: () => <div>Placeholder</div>,
 };
 
 export { elementButton, ContainerElement };
+
+
+function previewComponent({ instance, children, className, ...rest }: ElementProps) {
+    const { dispatch } = useWebsiteBuilder();
+    const [over, setOver] = useState<boolean>(false);
+    const { id: dropAreaId } = instance;
+
+    const onDragOver = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation()
+        setOver(true);
+    };
+
+    const onDragLeave = (e: React.DragEvent) => {
+        e.preventDefault();
+        setOver(false);
+    };
+
+    const onDragEnd = (e: React.DragEvent) => {
+        e.preventDefault();
+        setOver(false);
+    };
+
+    const onDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const data: keyof typeof ElementType = e.dataTransfer.getData("elementType") as keyof typeof ElementType;
+        const myAddAction: AddElement = {
+            type: ActionType.AddElement,
+            payload: {
+                containerId: dropAreaId,
+                element: ElementImpl[data].constructor(),
+            },
+        };
+
+        dispatch(myAddAction);
+        setOver(false);
+    };
+
+
+    const handleRender = (element: Element) => {
+        if (!Array.isArray(element.content)) {
+            return (
+                <ElementActions elementId={element.id} key={element.id}>
+                    <div
+                        {...rest}
+                        onDragOver={onDragOver}
+                        onDragLeave={onDragLeave}
+                        onDragEnd={onDragEnd}
+                        onDrop={onDrop}
+                        className={cn(" m-2 p-2 border",
+                            { "border border-green-500": over })}>
+
+                    </div>
+                </ElementActions >
+            )
+        }
+
+
+        return (
+
+            <ElementActions elementId={element.id} key={element.id}>
+                <div
+                    {...rest}
+                    onDragOver={onDragOver}
+                    onDragLeave={onDragLeave}
+                    onDragEnd={onDragEnd}
+                    onDrop={onDrop}
+                    className={cn(" m-2 p-2 border",
+                        { "border border-green-500": over }, className)} >
+                    {
+                        element.content.map((el) => {
+                            const PreviewComponent = el.previewComponent;
+                            return (
+                                <PreviewComponent key={el.id} instance={el} />
+                            )
+                        })
+                    }
+
+                </div>
+            </ElementActions >
+        )
+
+    }
+
+
+
+
+    return (
+        // <ElementActions elementId={instance.id} key={instance.id}>
+        <>
+            {handleRender(instance)}
+        </>
+
+
+        // </ElementActions >
+    )
+}
