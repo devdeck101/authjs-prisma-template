@@ -41,17 +41,6 @@ const Canvas = () => {
 		setOver(false);
 	};
 
-	const handleElementClick = (element: Element) => {
-		const mySelectAction: SelectElement = {
-			type: ActionType.SelectElement,
-			payload: {
-				element,
-			},
-		};
-		dispatch(mySelectAction);
-	};
-
-	//TODO: MousePointer on elements
 	return (
 		<div
 			className={cn("flex flex-col items-center justify-start flex-1 cursor-pointer", over ? "border border-green-500" : "")}
@@ -64,15 +53,12 @@ const Canvas = () => {
 				const PreviewComponent = element.previewComponent;
 				return (
 					<PreviewComponent
-						onClick={(e: React.MouseEvent) => {
-							handleElementClick(element)
-						}}
 						key={element.id}
 						instance={element}
 					/>
 				);
 			})}
-
+			{/* {JSON.stringify(state.editor.elements)} */}
 		</div>
 	);
 };

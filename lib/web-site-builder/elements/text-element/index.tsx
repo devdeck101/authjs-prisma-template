@@ -52,14 +52,14 @@ function PreviewComponent({ instance, className, ...rest }: ElementProps) {
 
 	//TODO: Understand why this classnames are not rendering events like hover
 	return (
-		<ElementActions elementId={instance.id}>
+		<ElementActions element={instance}>
 			<div
 				{...rest}
 				className={cn("m-2 p-2 border", className, {
 					"border-green-500": !!selectedElement && instance.id === selectedElement.id,
 				})}
 			>
-				{instance.id}-{text}
+				({instance.id.substring(instance.id.length - 6, instance.id.length)}) -{text}
 			</div>
 		</ElementActions>
 

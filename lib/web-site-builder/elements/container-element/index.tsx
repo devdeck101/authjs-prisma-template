@@ -76,16 +76,16 @@ function previewComponent({ instance, children, className, ...rest }: ElementPro
     const handleRender = (element: Element) => {
         if (!Array.isArray(element.content)) {
             return (
-                <ElementActions elementId={element.id} key={element.id}>
+                <ElementActions element={element} key={element.id}>
                     <div
                         {...rest}
                         onDragOver={onDragOver}
                         onDragLeave={onDragLeave}
                         onDragEnd={onDragEnd}
                         onDrop={onDrop}
-                        className={cn(" m-2 p-2 border",
+                        className={cn("grid grid-cols-2 m-2 p-2 border",
                             { "border border-green-500": over })}>
-
+                        {element.id.substring(element.id.length - 6, element.id.length)}
                     </div>
                 </ElementActions >
             )
@@ -94,15 +94,16 @@ function previewComponent({ instance, children, className, ...rest }: ElementPro
 
         return (
 
-            <ElementActions elementId={element.id} key={element.id}>
+            <ElementActions element={element} key={element.id}>
                 <div
                     {...rest}
                     onDragOver={onDragOver}
                     onDragLeave={onDragLeave}
                     onDragEnd={onDragEnd}
                     onDrop={onDrop}
-                    className={cn(" m-2 p-2 border",
+                    className={cn("grid grid-cols-2 m-2 p-2 border",
                         { "border border-green-500": over }, className)} >
+                    {element.id.substring(element.id.length - 6, element.id.length)}
                     {
                         element.content.map((el) => {
                             const PreviewComponent = el.previewComponent;
