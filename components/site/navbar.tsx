@@ -42,7 +42,7 @@ const Navbar = async () => {
 					Multi-Step-Form
 				</Link>
 				<Link
-					href="/example/web-site-builder/campaign"
+					href="/example/web-site-builder/campaign-hot-page"
 					className="text-muted-foreground transition-colors hover:text-foreground min-w-fit z-50"
 				>
 					Website Builder
