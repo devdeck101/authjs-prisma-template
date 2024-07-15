@@ -23,7 +23,8 @@ const SidebarComponents = () => {
 				{!selectedElement && (
 					<div className="grid grid-cols-2 space-x-4">
 						<ElementButton element={ElementImpl.TextElement} />
-						<ElementButton element={ElementImpl.ContainerElement} />
+						<ElementButton element={ElementImpl.SimpleBannerElement} />
+						{/* <ElementButton element={ElementImpl.ContainerElement} /> */}
 					</div>
 				)}
 			</div>

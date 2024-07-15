@@ -13,7 +13,6 @@ const editorActionReducer: EditorActionReducer = (state: EditorState, action: Ed
 	switch (action.type) {
 		case ActionType.AddElement: {
 			const { element: newElement, containerId } = action.payload;
-			console.log(`Container ID: ${containerId}`);
 			if (!containerId) {
 				const newState: EditorState = {
 					editor: {

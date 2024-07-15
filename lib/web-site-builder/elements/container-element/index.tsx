@@ -85,7 +85,7 @@ function previewComponent({ instance, children, className, ...rest }: ElementPro
                         onDrop={onDrop}
                         className={cn("grid grid-cols-2 m-2 p-2 border",
                             { "border border-green-500": over })}>
-                        {element.id.substring(element.id.length - 6, element.id.length)}
+
                     </div>
                 </ElementActions >
             )
@@ -103,7 +103,6 @@ function previewComponent({ instance, children, className, ...rest }: ElementPro
                     onDrop={onDrop}
                     className={cn("grid grid-cols-2 m-2 p-2 border",
                         { "border border-green-500": over }, className)} >
-                    {element.id.substring(element.id.length - 6, element.id.length)}
                     {
                         element.content.map((el) => {
                             const PreviewComponent = el.previewComponent;

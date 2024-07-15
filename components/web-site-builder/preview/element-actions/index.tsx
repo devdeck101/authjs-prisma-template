@@ -50,7 +50,7 @@ const ElementActions = ({ children, element }: Props) => {
                 <div className="absolute right-0 top-0 -translate-x-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <Button variant={"action"} size={"action"} onClick={(e: React.MouseEvent) => {
                         e.stopPropagation();
-                        alert(element.id.substring(element.id.length - 6, element.id.length))
+                        // alert(element.id.substring(element.id.length - 6, element.id.length))
                         handleDeleteElement(element.id)
                     }}>
                         <Trash className="w-4 h-4" />
