@@ -12,7 +12,7 @@ const CampaignForm = () => {
 	const { CurrentForm } = useMultiStepForm(CampaignFormContext);
 
 	return (
-		<MultiStepForm title="Onboarding" description="Entre com as informações para começar a usar o produto">
+		<MultiStepForm title="Campanha" description="Entre com as informações da Campanha">
 			<MultiStepNavbar context={CampaignFormContext} />
 			<div className="flex flex-col flex-1 border p-2 min-w-fit">
 				<motion.div variants={container} className="flex flex-col gap-2" initial="hidden" animate="visible" exit="exit">

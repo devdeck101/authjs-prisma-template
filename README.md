@@ -141,7 +141,7 @@ npx prisma migrate dev
 ou
 
 ```bash
-npx prisma db:push
+npx prisma db push
 ```
 
 ### Scripts disponíveis
