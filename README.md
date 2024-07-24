@@ -12,6 +12,7 @@ Este Starter Kit foi desenvolvido para poupar seu tempo, oferecendo tudo o que v
 <img src="assets/forget_password_page.jpg" alt="drawing" width="400"/>
 <img src="assets/light_landing_page.jpg" alt="drawing" width="400"/>
 <img src="assets/multi-step-form.jpg" alt="drawing" width="400"/>
+<img src="assets/EditableContent_view.jpg" alt="drawing" width="400"/>
 <img src="assets/docs.jpg" alt="drawing" width="400"/>
 </div>
 
@@ -243,7 +244,28 @@ Para aprender como foi desenvolvido nos detalhes, você pode ver o seguinte víd
 [<img src="assets/SASS_DAY_3_Multi-Step-Form.jpg" alt="drawing" width="330"/>](https://youtube.com/live/-QB9fkcCdbk?feature=share)
 
 
+# Editable Content Compoennt (Compoenent de Conteúdo Editável)
 
+Você pode encontrar o exemplo em `app\example\editable-content\page.tsx`
+
+```JavaScript
+"use client";
+import { EditableContent } from "@/components/ui/extension/editable-content"
+
+const Page = () => {
+
+    const handleSave = (value: unknown) => {
+        console.log(value);
+    }
+    return (
+        <div className="flex flex-col w-full min-h-full items-center justify-center">
+            <EditableContent initialValue="Placeholder Text" action={handleSave} />
+        </div>
+    )
+}
+
+export default Page
+```
 
 # Não se esqueça
 

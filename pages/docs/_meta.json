@@ -9,6 +9,7 @@
     "prisma": "Prisma",
     "initialize": "Inicialização",
     "security": "Segurança",
-    "multi-step-form": "Multi Step Form"
+    "multi-step-form": "Multi Step Form",
+    "editable-content": "Component de Conteúdo Editável"
     
 }

@@ -9,6 +9,7 @@ export const configRoutes: ConfigRoutes = {
 		"/auth/reset-password",
 		"/auth/verify-email",
 		"/example/web-site-builder/campaign-hot-page",
+		"/auth/users",
 	],
 	authRoutes: ["/api/auth/signin"],
 	apiRoutes: ["/api/protected-api"],
