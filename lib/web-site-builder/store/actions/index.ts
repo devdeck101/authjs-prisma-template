@@ -1,8 +1,7 @@
-import type { EditorState } from "@/types/web-site-builder";
+import type { EditorState, Element } from "@/types/web-site-builder";
 import { ActionType, type EditorAction, type EditorActionReducer } from "@/types/web-site-builder/actions";
-import type { Element } from "@/types/web-site-builder";
 /**
- * Creates the reducer funcdtion for the Website builder.
+ * Creates the reducer function for the Website builder.
  *
  * @param {EditorState} state - The initial state of the Website builder
  * @param {EditorAction} action - The action and the payload
@@ -52,7 +51,7 @@ const editorActionReducer: EditorActionReducer = (state: EditorState, action: Ed
 			return newState;
 		}
 		case ActionType.DeleteElement: {
-			//TODO: find element on multy-dimentional array
+			//TODO: find element on multi dimensional array
 			const { elementId } = action.payload;
 			const currentElements = [...state.editor.elements];
 			const updateElements = currentElements.filter((el) => el.id !== elementId);

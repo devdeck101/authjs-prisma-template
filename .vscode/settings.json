@@ -4,5 +4,6 @@
     "/\".*\"/", // "It's ignoring strings between double quotes"
     "/'.*'/", // 'It's ignoring strings between single quotes'
     "/`.*`/" // `It's ignoring strings between backticks`
-  ]
+  ],
+  "cSpell.words": ["vercel"]
 }
