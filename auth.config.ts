@@ -8,24 +8,24 @@ import { CredentialsSchema } from "./schemas/auth";
 import { findUserByEmail } from "./services";
 
 export default {
-  providers: [
-    Credentials({
-      async authorize(credentials) {
-        const validdCredentials = CredentialsSchema.safeParse(credentials);
-        if (validdCredentials.success) {
-          const { email, password } = validdCredentials.data;
-          const user = await findUserByEmail(email);
-          if (!user || !user.password) {
-            throw new UserNotFound();
-          }
-          const validPassword = await bcryptjs.compare(password, user.password);
-          if (validPassword) return user;
-        }
-        //TODO: Would it be better to throw new InvalidCredential?
-        return null;
-      },
-    }),
-    Google,
-    Github,
-  ],
+	providers: [
+		Credentials({
+			async authorize(credentials) {
+				const validatedCredentials = CredentialsSchema.safeParse(credentials);
+				if (validatedCredentials.success) {
+					const { email, password } = validatedCredentials.data;
+					const user = await findUserByEmail(email);
+					if (!user || !user.password) {
+						throw new UserNotFound();
+					}
+					const validPassword = await bcryptjs.compare(password, user.password);
+					if (validPassword) return user;
+				}
+				//TODO: Would it be better to throw new InvalidCredential?
+				return null;
+			},
+		}),
+		Google,
+		Github,
+	],
 } satisfies NextAuthConfig;

@@ -99,7 +99,7 @@ function useMultiStepForm<T extends UseMultiStepFormTypeOptions<any>>(context: C
 	};
 
 	/**
-	 * Create a string array of labekls
+	 * Create a string array of labels
 	 *
 	 * @returns {string[]} string array of labels
 	 */
