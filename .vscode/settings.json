@@ -8,7 +8,7 @@
 		"/`.*`/" // `It's ignoring strings between backticks`
 	],
 	// This is the list of words that will be ignored by the spell checker.
-	"cSpell.words": ["vercel", "endregion"],
+	"cSpell.words": ["developerdeck", "endregion", "NEXTAUTH", "vercel"],
 	// This is the list of files and paths that will be ignored by the spell checker.
 	"cSpell.ignorePaths": ["*.md", "node_modules/**"],
 	// Lint configuration
