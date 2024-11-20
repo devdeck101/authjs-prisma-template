@@ -34,7 +34,7 @@ const EditComponent = () => {
 			<CardHeader className="flex flex-row items-start bg-muted/50">
 				<div className="grid gap-0.5">
 					<CardTitle className="group flex items-center gap-2 text-lg">{element.type}</CardTitle>
-					<CardDescription>Edite o texto</CardDescription>
+					<CardDescription>{"Edite o texto"}</CardDescription>
 				</div>
 				<div className="ml-auto flex items-center gap-1">
 					<Button onClick={handleUnselectElement} size="icon" variant="ghost" className="h-8 w-8">
@@ -44,7 +44,7 @@ const EditComponent = () => {
 			</CardHeader>
 			<CardContent className="p-6 text-sm">
 				<div className="grid gap-3">
-					<div className="font-semibold">Propriedades</div>
+					<div className="font-semibold">{"Propriedades"}</div>
 					<Separator className="my-2" />
 					<Component instance={element} />
 				</div>

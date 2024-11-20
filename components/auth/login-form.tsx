@@ -13,7 +13,7 @@ import type { z } from "zod";
 
 import { login } from "@/actions/auth";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { CredentialsSchema } from "@/schemas/auth";
 import { LoaderIcon } from "lucide-react";
 import { useSearchParams } from "next/navigation";
@@ -27,7 +27,11 @@ export default function LoginForm() {
 	const [success, setSuccess] = useState<string>("");
 	const [showOTPForm, setShowOTP] = useState<boolean>(false);
 	const searchParams = useSearchParams();
-	const callbackError = searchParams ? searchParams.get("error") === "OAuthAccountNotLinked" ? "E-mail em uso com provedor diferente" : undefined : undefined;
+	const callbackError = searchParams
+		? searchParams.get("error") === "OAuthAccountNotLinked"
+			? "E-mail em uso com provedor diferente"
+			: undefined
+		: undefined;
 	const form = useForm<z.infer<typeof CredentialsSchema>>({
 		resolver: zodResolver(CredentialsSchema),
 		defaultValues: {
@@ -93,7 +97,7 @@ export default function LoginForm() {
 									name="email"
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>E-mail</FormLabel>
+											<FormLabel>{"E-mail"}</FormLabel>
 											<FormControl>
 												<Input
 													type="email"
@@ -103,7 +107,7 @@ export default function LoginForm() {
 													disabled={isPending}
 												/>
 											</FormControl>
-											<FormDescription className="hidden">Seu e-mail.</FormDescription>
+											<FormDescription className="hidden">{"Seu e-mail."}</FormDescription>
 											<FormMessage />
 										</FormItem>
 									)}
@@ -113,7 +117,7 @@ export default function LoginForm() {
 									name="password"
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Senha</FormLabel>
+											<FormLabel>{"Senha"}</FormLabel>
 											<FormControl>
 												<div>
 													<Input type="password" placeholder="******" required {...field} disabled={isPending} />
@@ -122,12 +126,12 @@ export default function LoginForm() {
 															href="/auth/reset-password"
 															className="ml-auto inline-block text-sm text-secondary-foreground underline"
 														>
-															Esqueceu a senha?
+															{"Esqueceu a senha?"}
 														</Link>
 													</div>
 												</div>
 											</FormControl>
-											<FormDescription className="hidden">Seu e-mail.</FormDescription>
+											<FormDescription className="hidden">{"Seu e-mail."}</FormDescription>
 											<FormMessage />
 										</FormItem>
 									)}
@@ -137,7 +141,7 @@ export default function LoginForm() {
 								{success && <AuthFormMessage type="success" message={success} title="Sucesso" />}
 								<Button variant={"default"} className="w-full" disabled={isPending}>
 									<LoaderIcon className={!isPending ? "hidden" : "animate-spin mr-2"} />
-									<span>Conectar</span>
+									<span>{"Conectar"}</span>
 								</Button>
 							</div>
 						)}
@@ -148,7 +152,7 @@ export default function LoginForm() {
 									name="code"
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Código</FormLabel>
+											<FormLabel>{"Código"}</FormLabel>
 											<FormControl>
 												<InputOTP maxLength={6} {...field}>
 													<InputOTPGroup>
@@ -163,7 +167,7 @@ export default function LoginForm() {
 													</InputOTPGroup>
 												</InputOTP>
 											</FormControl>
-											<FormDescription>Favor entrar com o códio enviado por e-mail</FormDescription>
+											<FormDescription>{"Favor entrar com o códio enviado por e-mail"}</FormDescription>
 											<FormMessage />
 										</FormItem>
 									)}
@@ -171,7 +175,7 @@ export default function LoginForm() {
 								{error && <AuthFormMessage type="error" message={error} title="Erro" />}
 								<Button variant={"default"} className="w-full" disabled={isPending}>
 									<LoaderIcon className={!isPending ? "hidden" : "animate-spin mr-2"} />
-									<span>Validar</span>
+									<span>{"Validar"}</span>
 								</Button>
 							</div>
 						)}
@@ -183,17 +187,17 @@ export default function LoginForm() {
 
 				{!showOTPForm && (
 					<div className="mt-4 text-center text-sm">
-						Não tem uma conta?{" "}
+						{"Não tem uma conta?"}{" "}
 						<Link href="/auth/register" className="underline">
-							Cadastre-se
+							{"Cadastre-se"}
 						</Link>
 					</div>
 				)}
 				{showOTPForm && (
 					<div className="mt-4 text-center text-sm">
-						Conectar agora?{" "}
+						{"Conectar agora?"}{" "}
 						<Link href="/auth/login" className="underline">
-							Conectar
+							{"Conectar"}
 						</Link>
 					</div>
 				)}

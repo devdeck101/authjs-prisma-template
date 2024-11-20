@@ -1,4 +1,3 @@
-
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import ElementActions from "@/components/web-site-builder/preview/element-actions";
@@ -49,7 +48,6 @@ function PreviewComponent({ instance, className, ...rest }: ElementProps) {
 		customAttributes: { text },
 	} = instance;
 
-
 	//TODO: Understand why this classnames are not rendering events like hover
 	return (
 		<ElementActions element={instance}>
@@ -62,7 +60,6 @@ function PreviewComponent({ instance, className, ...rest }: ElementProps) {
 				{text}
 			</div>
 		</ElementActions>
-
 	);
 }
 
@@ -113,7 +110,7 @@ function EditComponent({ instance }: ElementProps) {
 					name="text"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Text</FormLabel>
+							<FormLabel>{"Text"}</FormLabel>
 							<FormControl>
 								<Input
 									placeholder="Text element"
@@ -123,7 +120,7 @@ function EditComponent({ instance }: ElementProps) {
 									}}
 								/>
 							</FormControl>
-							<FormDescription>Componente de texto</FormDescription>
+							<FormDescription>{"Componente de texto"}</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}

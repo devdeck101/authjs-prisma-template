@@ -13,7 +13,7 @@ import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Separator } from "../ui/separator";
 import { Switch } from "../ui/switch";
 import AuthFormMessage from "./auth-form-message";
@@ -72,8 +72,8 @@ export default function UserSettingsForm({ user }: Props) {
 	return (
 		<Card x-chunk="dashboard-04-chunk-1">
 			<CardHeader>
-				<CardTitle>Dados do Usuário</CardTitle>
-				<CardDescription>Suas informações</CardDescription>
+				<CardTitle>{"Dados do Usuário"}</CardTitle>
+				<CardDescription>{"Suas informações"}</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<div className="space-y-4">
@@ -85,7 +85,7 @@ export default function UserSettingsForm({ user }: Props) {
 									name="name"
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Name</FormLabel>
+											<FormLabel>{"Name"}</FormLabel>
 											<FormControl>
 												<Input
 													autoComplete="off"
@@ -95,7 +95,7 @@ export default function UserSettingsForm({ user }: Props) {
 													disabled={isPending}
 												/>
 											</FormControl>
-											<FormDescription className="hidden">Seu nome.</FormDescription>
+											<FormDescription className="hidden">{"Seu nome."}</FormDescription>
 											<FormMessage />
 										</FormItem>
 									)}
@@ -105,11 +105,11 @@ export default function UserSettingsForm({ user }: Props) {
 									name="email"
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>E-mail</FormLabel>
+											<FormLabel>{"E-mail"}</FormLabel>
 											<FormControl>
 												<Input type="email" placeholder="voce@provedor.com.br" {...field} disabled />
 											</FormControl>
-											<FormDescription className="hidden">Seu e-mail.</FormDescription>
+											<FormDescription className="hidden">{"Seu e-mail."}</FormDescription>
 											<FormMessage />
 										</FormItem>
 									)}
@@ -119,11 +119,11 @@ export default function UserSettingsForm({ user }: Props) {
 									name="password"
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Senha</FormLabel>
+											<FormLabel>{"Senha"}</FormLabel>
 											<FormControl>
 												<Input type="password" placeholder="******" {...field} disabled={isPending} />
 											</FormControl>
-											<FormDescription className="hidden">Seu e-mail.</FormDescription>
+											<FormDescription className="hidden">{"Seu e-mail."}</FormDescription>
 											<FormMessage />
 										</FormItem>
 									)}
@@ -133,11 +133,11 @@ export default function UserSettingsForm({ user }: Props) {
 									name="newPassword"
 									render={({ field }) => (
 										<FormItem>
-											<FormLabel>Nova senha</FormLabel>
+											<FormLabel>{"Nova senha"}</FormLabel>
 											<FormControl>
 												<Input type="password" placeholder="******" {...field} disabled={isPending} />
 											</FormControl>
-											<FormDescription className="hidden">Seu e-mail.</FormDescription>
+											<FormDescription className="hidden">{"Seu e-mail."}</FormDescription>
 											<FormMessage />
 										</FormItem>
 									)}
@@ -150,8 +150,8 @@ export default function UserSettingsForm({ user }: Props) {
 										<FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 m-2 space-x-2">
 											<ShieldAlert className="text-yellow-400" />
 											<FormLabel className="flex-1 space-y-1">
-												<p className="text-sm font-medium leading-none">Autenticação de 2 Fatores</p>
-												<p className="text-sm text-muted-foreground">Deixe sua conta mais segura</p>
+												<p className="text-sm font-medium leading-none">{"Autenticação de 2 Fatores"}</p>
+												<p className="text-sm text-muted-foreground">{"Deixe sua conta mais segura"}</p>
 											</FormLabel>
 											<FormControl>
 												<Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -166,7 +166,7 @@ export default function UserSettingsForm({ user }: Props) {
 								<div className="w-full flex justify-end items-center">
 									<Button variant={"default"} disabled={isPending}>
 										<LoaderIcon className={!isPending ? "hidden" : "animate-spin mr-2"} />
-										<span>Salvar</span>
+										<span>{"Salvar"}</span>
 									</Button>
 								</div>
 							</div>
@@ -175,7 +175,7 @@ export default function UserSettingsForm({ user }: Props) {
 
 					<div className="mt-4 text-center text-sm">
 						<Link href="/" className="underline">
-							Página Inicial
+							{"Página Inicial"}
 						</Link>
 					</div>
 				</div>

@@ -10,19 +10,19 @@ const Step1 = () => {
 	return (
 		<Card className="border-none">
 			<CardHeader className="pl-0">
-				<CardTitle>Nomear sua campanha</CardTitle>
-				<CardDescription>O Nome será usado em relatórios</CardDescription>
+				<CardTitle>{"Nomear sua campanha"}</CardTitle>
+				<CardDescription>{"O Nome será usado em relatórios"}</CardDescription>
 			</CardHeader>
 			<FormField
 				control={control}
 				name="name"
 				render={({ field }) => (
 					<FormItem>
-						<FormLabel>Nome</FormLabel>
+						<FormLabel>{"Nome"}</FormLabel>
 						<FormControl>
 							<Input placeholder="Capanha para Devs" {...field} />
 						</FormControl>
-						<FormDescription>Nome público da campanha.</FormDescription>
+						<FormDescription>{"Nome público da campanha."}</FormDescription>
 						<FormMessage />
 					</FormItem>
 				)}

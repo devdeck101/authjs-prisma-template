@@ -1,5 +1,5 @@
 import Navbar from "@/components/site/navbar";
-import { HandCoins, Twitch, Youtube } from "lucide-react";
+import { HandCoins, Twitch } from "lucide-react";
 
 export default function Home() {
 	return (
@@ -18,9 +18,9 @@ export default function Home() {
 								rel="noreferrer"
 							>
 								<span className="text-xs bg-primary-600 rounded-full text-foreground dark:text-white px-4 py-1.5 mr-3">
-									Novidades
+									{"Novidades"}
 								</span>{" "}
-								<span className="text-sm font-medium">Auth Starter-Kit</span>
+								<span className="text-sm font-medium">{"Auth Starter-Kit"}</span>
 								<svg
 									className="ml-2 w-5 h-5"
 									fill="currentColor"
@@ -38,12 +38,13 @@ export default function Home() {
 							</a>
 							<h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
 								<span className="bg-gradient-to-r from-primary dark:to-white to-gray-600 text-transparent bg-clip-text">
-									Pronto para autenticar seu novo projeto
+									{"Pronto para autenticar seu novo projeto"}
 								</span>
 							</h1>
 							<p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-								Este Starter-Kit foi desenvolvido para poupar seu tempo. Aqui você encontra o que precisa para começar a
-								desenvolver seu projeto com segurança.
+								{
+									"Este Starter-Kit foi desenvolvido para poupar seu tempo. Aqui você encontra o que precisa para começar a desenvolver seu projeto com segurança."
+								}
 							</p>
 							<div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
 								<a
@@ -52,7 +53,7 @@ export default function Home() {
 									target="_blank"
 									rel="noreferrer"
 								>
-									Saiba mais
+									{"Saiba mais"}
 									<svg
 										className="ml-2 -mr-1 w-5 h-5"
 										fill="currentColor"
@@ -84,11 +85,11 @@ export default function Home() {
 									>
 										<path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
 									</svg>
-									Assista o vídeo
+									{"Assista o vídeo"}
 								</a>
 							</div>
 							<div className="px-4 mx-auto text-center md:max-w-screen-md lg:max-w-screen-lg lg:px-36">
-								<span className="font-semibold text-gray-400 uppercase">Apoio ao Canal</span>
+								<span className="font-semibold text-gray-400 uppercase">{"Apoio ao Canal"}</span>
 								<div className="flex flex-wrap justify-center items-center mt-8 text-gray-500 sm:justify-between">
 									<a
 										href="https://www.youtube.com/channel/UCj75B_51OXb9qH15wiHs-Hw/join"
@@ -147,7 +148,7 @@ export default function Home() {
 									>
 										<div className="flex items-center space-x-2 text-4xl">
 											<HandCoins className="w-8 h-8 rounded-md dark:text-white/70" />
-											<span>Livepix</span>
+											<span>{"Livepix"}</span>
 										</div>
 									</a>
 									<a
@@ -156,7 +157,7 @@ export default function Home() {
 									>
 										<div className="flex items-center space-x-2 text-4xl">
 											<Twitch className="w-8 h-8 rounded-md dark:text-white/70" />
-											<span>Twitch</span>
+											<span>{"Twitch"}</span>
 										</div>
 									</a>
 								</div>

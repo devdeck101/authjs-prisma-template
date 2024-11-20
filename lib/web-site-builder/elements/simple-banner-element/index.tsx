@@ -125,7 +125,7 @@ function EditComponent({ instance }: ElementProps) {
 					name="title"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Aviso</FormLabel>
+							<FormLabel>{"Aviso"}</FormLabel>
 							<FormControl>
 								<Input
 									placeholder="Aviso"
@@ -135,7 +135,7 @@ function EditComponent({ instance }: ElementProps) {
 									}}
 								/>
 							</FormControl>
-							<FormDescription>Título do aviso</FormDescription>
+							<FormDescription>{"Título do aviso"}</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
@@ -145,7 +145,7 @@ function EditComponent({ instance }: ElementProps) {
 					name="message"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Mensagem</FormLabel>
+							<FormLabel>{"Mensagem"}</FormLabel>
 							<FormControl>
 								<Input
 									placeholder="Sua mensagem,"
@@ -155,7 +155,7 @@ function EditComponent({ instance }: ElementProps) {
 									}}
 								/>
 							</FormControl>
-							<FormDescription>Mensagem de aviso</FormDescription>
+							<FormDescription>{"Mensagem de aviso"}</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}
@@ -165,11 +165,11 @@ function EditComponent({ instance }: ElementProps) {
 					name="color"
 					render={({ field }) => (
 						<FormItem>
-							<FormLabel>Cor</FormLabel>
+							<FormLabel>{"Cor"}</FormLabel>
 							<FormControl>
 								<ColorPicker onChange={(v) => field.onChange(v)} value={field.value} />
 							</FormControl>
-							<FormDescription>Mensagem de aviso</FormDescription>
+							<FormDescription>{"Mensagem de aviso"}</FormDescription>
 							<FormMessage />
 						</FormItem>
 					)}

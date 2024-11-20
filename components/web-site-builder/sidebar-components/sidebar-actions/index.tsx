@@ -24,7 +24,7 @@ const SidebarActions = () => {
 						</Dialog>
 					</TooltipTrigger>
 					<TooltipContent>
-						<p>Visualizar</p>
+						<p>{"Visualizar"}</p>
 					</TooltipContent>
 				</Tooltip>
 			</TooltipProvider>
@@ -36,7 +36,7 @@ const SidebarActions = () => {
 						</Button>
 					</TooltipTrigger>
 					<TooltipContent>
-						<p>Salvar</p>
+						<p>{"Salvar"}</p>
 					</TooltipContent>
 				</Tooltip>
 			</TooltipProvider>
@@ -48,7 +48,7 @@ const SidebarActions = () => {
 						</Button>
 					</TooltipTrigger>
 					<TooltipContent>
-						<p>Publicar</p>
+						<p>{"Publicar"}</p>
 					</TooltipContent>
 				</Tooltip>
 			</TooltipProvider>
