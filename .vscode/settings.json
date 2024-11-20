@@ -1,0 +1,8 @@
+{
+  "cSpell.ignoreRegExpList": [
+    // This ignores Portuguese strings before the dictionary implementation.
+    "/\".*\"/", // "It's ignoring strings between double quotes"
+    "/'.*'/", // 'It's ignoring strings between single quotes'
+    "/`.*`/" // `It's ignoring strings between backticks`
+  ]
+}
