@@ -1,6 +1,3 @@
 {
-  "recommendations": [
-    "streetsidesoftware.code-spell-checker",
-    "biomejs.biome"
-  ]
+	"recommendations": ["streetsidesoftware.code-spell-checker", "biomejs.biome"]
 }
