@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import LoginBadge from "@/components/auth/login-badge";
-import { Input } from "@/components/ui/input";
-import { Fingerprint, Search } from "lucide-react";
+import { Fingerprint } from "lucide-react";
 import Link from "next/link";
 import { ThemeToggle } from "../theme-toggle";
 
@@ -12,50 +11,45 @@ const Navbar = async () => {
 			<div className="flex flex-row w-full gap-4">
 				<Link href="#" className="flex items-center gap-2 text-lg font-semibold md:text-base">
 					<Fingerprint className="h-6 w-6 text-green-500" />
-					<span className="sr-only">DeveloperDeck101 - Authjs</span>
+					<span className="sr-only">{"DeveloperDeck101 - Authjs"}</span>
 				</Link>
 				<Link href="#" className="text-foreground transition-colors hover:text-foreground">
-					HOME
+					{"HOME"}
 				</Link>
-				<Link
-					href="/docs"
-					className="text-muted-foreground transition-colors hover:text-foreground min-w-fit z-50"
-				>
-					Docs
+				<Link href="/docs" className="text-muted-foreground transition-colors hover:text-foreground min-w-fit z-50">
+					{"Docs"}
 				</Link>
 				<Link href="#" className="text-muted-foreground transition-colors hover:text-foreground">
-					Servidor
+					{"Servidor"}
 				</Link>
 				<Link href="#" className="text-muted-foreground transition-colors hover:text-foreground">
-					Cliente
+					{"Cliente"}
 				</Link>
 				<Link href="#" className="text-muted-foreground transition-colors hover:text-foreground">
-					API
+					{"API"}
 				</Link>
 				<Link href="#" className="text-muted-foreground transition-colors hover:text-foreground">
-					Middleware
+					{"Middleware"}
 				</Link>
 				<Link
 					href="/example/multi-step-form/campaign"
 					className="text-muted-foreground transition-colors hover:text-foreground min-w-fit z-50"
 				>
-					Multi-Step-Form
+					{"Multi-Step-Form"}
 				</Link>
 				<Link
 					href="/example/web-site-builder/campaign-hot-page"
 					className="text-muted-foreground transition-colors hover:text-foreground min-w-fit z-50"
 				>
-					Website Builder
+					{"Website Builder"}
 				</Link>
 			</div>
-
 
 			<div className="flex  items-center gap-4 md:ml-auto md:gap-2 lg:gap-4 ">
 				<LoginBadge user={session?.user} />
 				<ThemeToggle />
 			</div>
 		</nav>
-
 	);
 };
 

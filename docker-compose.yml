@@ -1,9 +1,16 @@
+version: '3.8'
+
 services:
   postgres:
     container_name: dev_database
     image: postgres
     environment:
-      - POSTGRES_USER=developerdeck101
-      - POSTGRES_PASSWORD=developerdeck101
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     ports:
-      - 5432:5432
+      - "${DB_PORT}:5432"
+    volumes:
+      - authJs_prisma_template:/var/lib/postgresql/data
+
+volumes:
+  authJs_prisma_template: 

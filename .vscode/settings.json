@@ -1,0 +1,21 @@
+{
+	"cSpell.enabled": true,
+	"cSpell.language": "en",
+	"cSpell.ignoreRegExpList": [
+		// This ignores Portuguese strings before the dictionary implementation.
+		"/\".*\"/", // "It's ignoring strings between double quotes"
+		"/'.*'/", // 'It's ignoring strings between single quotes'
+		"/`.*`/" // `It's ignoring strings between backticks`
+	],
+	// This is the list of words that will be ignored by the spell checker.
+	"cSpell.words": ["cuid", "datasource", "developerdeck", "endregion", "NEXTAUTH", "uuidv", "vercel"],
+	// This is the list of files and paths that will be ignored by the spell checker.
+	"cSpell.ignorePaths": ["*.md", "node_modules/**"],
+	// Lint configuration
+	"eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+	"eslint.enable": true,
+	"eslint.run": "onSave",
+	// Format configuration
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "biomejs.biome"
+}

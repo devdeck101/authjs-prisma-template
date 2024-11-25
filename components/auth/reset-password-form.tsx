@@ -55,7 +55,7 @@ export const ResetPasswordForm = () => {
 							name="email"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Email</FormLabel>
+									<FormLabel>{"Email"}</FormLabel>
 									<FormControl>
 										<Input {...field} disabled={isPending} placeholder="voce@provedor.com.br" type="email" />
 									</FormControl>
@@ -69,14 +69,14 @@ export const ResetPasswordForm = () => {
 
 					<Button variant={"default"} className="w-full" disabled={isPending}>
 						<LoaderIcon className={!isPending ? "hidden" : "animate-spin mr-2"} />
-						<span>Enviar e-mail</span>
+						<span>{"Enviar e-mail"}</span>
 					</Button>
 				</form>
 			</Form>
 			<div className="mt-4 text-center text-sm">
-				Gostaria de conectar-se?{" "}
+				{"Gostaria de conectar-se?"}{" "}
 				<Link href="/auth/login" className="underline">
-					Conectar agora
+					{"Conectar agora"}
 				</Link>
 			</div>
 		</AuthCard>

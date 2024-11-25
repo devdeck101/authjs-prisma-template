@@ -35,19 +35,19 @@ const LoginBadge = ({ user }: Props) => {
 						</Avatar>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align="end">
-						<DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
+						<DropdownMenuLabel>{"Minha Conta"}</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem>
 							<Link href="/auth/settings" className="flex flex-1 justify-start items-center">
 								<LineMdCogLoop className="mr-2" />
-								Perfil
+								{"Perfil"}
 							</Link>
 						</DropdownMenuItem>
 						<DropdownMenuSeparator />
 						<LogoutButton>
 							<DropdownMenuItem className="p-0 m-0">
 								<Button variant={"ghost"} className="flex flex-1 justify-around">
-									<LogOut /> Sair
+									<LogOut /> {"Sair"}
 								</Button>
 							</DropdownMenuItem>
 						</LogoutButton>
@@ -56,7 +56,7 @@ const LoginBadge = ({ user }: Props) => {
 			)}
 			{!user && (
 				<LoginButton>
-					<Button variant={"default"}>Entrar</Button>
+					<Button variant={"default"}>{"Entrar"}</Button>
 				</LoginButton>
 			)}
 		</>

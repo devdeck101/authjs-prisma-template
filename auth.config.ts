@@ -5,16 +5,16 @@ import Github from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import { InvalidCredentials, UserNotFound } from "./lib/auth";
 import { CredentialsSchema } from "./schemas/auth";
-import { findUserbyEmail } from "./services";
+import { findUserByEmail } from "./services";
 
 export default {
 	providers: [
 		Credentials({
 			async authorize(credentials) {
-				const validdCredentials = CredentialsSchema.safeParse(credentials);
-				if (validdCredentials.success) {
-					const { email, password } = validdCredentials.data;
-					const user = await findUserbyEmail(email);
+				const validatedCredentials = CredentialsSchema.safeParse(credentials);
+				if (validatedCredentials.success) {
+					const { email, password } = validatedCredentials.data;
+					const user = await findUserByEmail(email);
 					if (!user || !user.password) {
 						throw new UserNotFound();
 					}

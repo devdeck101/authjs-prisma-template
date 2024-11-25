@@ -9,7 +9,7 @@ export const findTwoFactorAuthTokenByEmail = async (email: string) => {
 	});
 	return token;
 };
-export const isTwoFactorAutenticationEnabled = async (id: string) => {
+export const isTwoFactorAuthenticationEnabled = async (id: string) => {
 	const user = await prisma.user.findUnique({
 		where: {
 			id,

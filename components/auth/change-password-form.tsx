@@ -5,7 +5,7 @@ import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
 
-import { changePassword, resetPassword } from "@/actions/auth";
+import { changePassword } from "@/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -24,7 +24,6 @@ export const ChangePasswordForm = () => {
 	if (!searchParams || !searchParams.has("token")) return null;
 
 	const token = searchParams.get("token");
-
 
 	const form = useForm<z.infer<typeof NewPasswordSchema>>({
 		resolver: zodResolver(NewPasswordSchema),
@@ -61,7 +60,7 @@ export const ChangePasswordForm = () => {
 							name="password"
 							render={({ field }) => (
 								<FormItem>
-									<FormLabel>Nova senha</FormLabel>
+									<FormLabel>{"Nova senha"}</FormLabel>
 									<FormControl>
 										<Input {...field} disabled={isPending} placeholder="******" type="password" />
 									</FormControl>
@@ -75,14 +74,14 @@ export const ChangePasswordForm = () => {
 
 					<Button variant={"default"} className="w-full" disabled={isPending}>
 						<LoaderIcon className={!isPending ? "hidden" : "animate-spin mr-2"} />
-						<span>Mudar senha</span>
+						<span>{"Mudar senha"}</span>
 					</Button>
 				</form>
 			</Form>
 			<div className="mt-4 text-center text-sm">
-				Gostaria de conectar-se?{" "}
+				{"Gostaria de conectar-se?"}{" "}
 				<Link href="/auth/login" className="underline">
-					Conectar agora
+					{"Conectar agora"}
 				</Link>
 			</div>
 		</AuthCard>

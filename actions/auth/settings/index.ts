@@ -1,10 +1,9 @@
 "use server";
 
 import { auth } from "@/auth";
-import { useCurrentUser } from "@/hooks/use-current-user";
 import { prisma } from "@/lib/db";
 import { UserSettingsSchema } from "@/schemas/auth";
-import { findUserbyEmail, findUserbyId } from "@/services";
+import { findUserById } from "@/services";
 import bcryptjs from "bcryptjs";
 import type { z } from "zod";
 
@@ -30,7 +29,7 @@ export const changeSettings = async (settings: z.infer<typeof UserSettingsSchema
 		};
 	}
 
-	const userData = await findUserbyId(session?.user.id);
+	const userData = await findUserById(session?.user.id);
 	if (!userData) {
 		return {
 			error: "Usuário não encontrado",
@@ -67,7 +66,7 @@ export const changeSettings = async (settings: z.infer<typeof UserSettingsSchema
 				...session.user,
 				name: updatedUser.name,
 				isTwoFactorEnabled: updatedUser.isTwoFactorAuthEnabled,
-				//TODO: Add fields to chande roles and or e-mail for the user????
+				//TODO: Add fields to change roles and or e-mail for the user????
 			},
 		});
 		return {

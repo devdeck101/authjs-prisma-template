@@ -56,7 +56,7 @@ export default function RegisterForm() {
 								name="name"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Name</FormLabel>
+										<FormLabel>{"Name"}</FormLabel>
 										<FormControl>
 											<Input
 												autoComplete="off"
@@ -67,7 +67,7 @@ export default function RegisterForm() {
 												disabled={isPending}
 											/>
 										</FormControl>
-										<FormDescription className="hidden">Seu nome.</FormDescription>
+										<FormDescription className="hidden">{"Seu nome."}</FormDescription>
 										<FormMessage />
 									</FormItem>
 								)}
@@ -77,11 +77,11 @@ export default function RegisterForm() {
 								name="email"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>E-mail</FormLabel>
+										<FormLabel>{"E-mail"}</FormLabel>
 										<FormControl>
 											<Input type="email" placeholder="voce@provedor.com.br" required {...field} disabled={isPending} />
 										</FormControl>
-										<FormDescription className="hidden">Seu e-mail.</FormDescription>
+										<FormDescription className="hidden">{"Seu e-mail."}</FormDescription>
 										<FormMessage />
 									</FormItem>
 								)}
@@ -91,11 +91,11 @@ export default function RegisterForm() {
 								name="password"
 								render={({ field }) => (
 									<FormItem>
-										<FormLabel>Senha</FormLabel>
+										<FormLabel>{"Senha"}</FormLabel>
 										<FormControl>
 											<Input type="password" placeholder="******" required {...field} disabled={isPending} />
 										</FormControl>
-										<FormDescription className="hidden">Seu e-mail.</FormDescription>
+										<FormDescription className="hidden">{"Seu e-mail."}</FormDescription>
 										<FormMessage />
 									</FormItem>
 								)}
@@ -104,16 +104,16 @@ export default function RegisterForm() {
 							{success && <AuthFormMessage type="success" message={success} title="Sucesso" />}
 							<Button variant={"default"} className="w-full" disabled={isPending}>
 								<LoaderIcon className={!isPending ? "hidden" : "animate-spin mr-2"} />
-								<span>Registrar</span>
+								<span>{"Registrar"}</span>
 							</Button>
 						</div>
 					</form>
 				</Form>
 
 				<div className="mt-4 text-center text-sm">
-					Já tem uma conta?{" "}
+					{"Já tem uma conta?"}{" "}
 					<Link href="/auth/login" className="underline">
-						Efetue Login
+						{"Efetue Login"}
 					</Link>
 				</div>
 			</div>

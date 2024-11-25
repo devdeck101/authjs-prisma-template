@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/db";
 import mail from "@/lib/mail";
-import { findUserbyEmail } from "@/services";
+import { findUserByEmail } from "@/services";
 import { findTwoFactorAuthTokeByToken } from "@/services/auth";
 import type { User } from "@prisma/client";
 
@@ -21,33 +21,33 @@ import type { User } from "@prisma/client";
  * @returns {Promise<{ error?: string, success?: string }>} An object indicating the result of the operation.
  */
 export const sendTwoFactorAuthEmail = async (user: User, token: string) => {
-	const { RESEND_EMAIL_FROM, OTP_SUBJECT } = process.env;
+  const { RESEND_EMAIL_FROM, OTP_SUBJECT } = process.env;
 
-	if (!RESEND_EMAIL_FROM || !OTP_SUBJECT) {
-		return {
-			error: "Configuração de ambiente insuficiente para envio de e-mail.",
-		};
-	}
+  if (!RESEND_EMAIL_FROM || !OTP_SUBJECT) {
+    return {
+      error: "Configuração de ambiente insuficiente para envio de e-mail.",
+    };
+  }
 
-	const { email } = user;
-	try {
-		const { error } = await mail.emails.send({
-			from: RESEND_EMAIL_FROM,
-			to: email,
-			subject: OTP_SUBJECT,
-			html: `<p>Sue código OTP: ${token}</p>`,
-		});
+  const { email } = user;
+  try {
+    const { error } = await mail.emails.send({
+      from: RESEND_EMAIL_FROM,
+      to: email,
+      subject: OTP_SUBJECT,
+      html: `<p>Sue código OTP: ${token}</p>`,
+    });
 
-		if (error)
-			return {
-				error,
-			};
-		return {
-			success: "E-mail enviado com sucesso",
-		};
-	} catch (error) {
-		return { error };
-	}
+    if (error)
+      return {
+        error,
+      };
+    return {
+      success: "E-mail enviado com sucesso",
+    };
+  } catch (error) {
+    return { error };
+  }
 };
 
 /**
@@ -57,45 +57,47 @@ export const sendTwoFactorAuthEmail = async (user: User, token: string) => {
  * @returns
  */
 export const verifyTwoFactorToken = async (token: string) => {
-	const existingToken = await findTwoFactorAuthTokeByToken(token);
-	if (!existingToken) {
-		return {
-			error: "Código de verificação não encontrado",
-		};
-	}
+  const existingToken = await findTwoFactorAuthTokeByToken(token);
+  if (!existingToken) {
+    return {
+      error: "Código de verificação não encontrado",
+    };
+  }
 
-	const isTokenExpired = new Date(existingToken.expires) < new Date();
-	if (isTokenExpired) {
-		return {
-			error: "Código de verificação expirado",
-		};
-	}
+  const isTokenExpired = new Date(existingToken.expires) < new Date();
+  if (isTokenExpired) {
+    return {
+      error: "Código de verificação expirado",
+    };
+  }
 
-	const user = await findUserbyEmail(existingToken.email);
-	if (!user) {
-		return {
-			error: "Usuário não encontrado",
-		};
-	}
+  const user = await findUserByEmail(existingToken.email);
+  if (!user) {
+    return {
+      error: "Usuário não encontrado",
+    };
+  }
 
-	try {
-		await prisma.user.update({
-			where: { id: user.id },
-			data: {
-				twoFactorAuthVerified: new Date(),
-			},
-		});
+  try {
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        twoFactorAuthVerified: new Date(),
+      },
+    });
 
-		await prisma.twoFactorToken.delete({
-			where: {
-				id: existingToken.id,
-			},
-		});
+    await prisma.twoFactorToken.delete({
+      where: {
+        id: existingToken.id,
+      },
+    });
 
-		return {
-			success: "Autênticação de dois fatores verificada",
-		};
-	} catch (err) {
-		return { error: "Erro ao verificar o  código de autenticação de 2 fatores" };
-	}
+    return {
+      success: "Autênticação de dois fatores verificada",
+    };
+  } catch (err) {
+    return {
+      error: "Erro ao verificar o  código de autenticação de 2 fatores",
+    };
+  }
 };

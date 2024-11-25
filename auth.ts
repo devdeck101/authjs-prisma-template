@@ -3,8 +3,8 @@ import { UserRole } from "@prisma/client";
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 import { prisma } from "./lib/db";
-import { findUserbyEmail } from "./services";
-import { isTwoFactorAutenticationEnabled } from "./services/auth";
+import { findUserByEmail } from "./services";
+import { isTwoFactorAuthenticationEnabled } from "./services/auth";
 export const {
 	handlers: { GET, POST },
 	auth,
@@ -25,7 +25,7 @@ export const {
 				return true;
 			}
 			if (user.email) {
-				const registeredUser = await findUserbyEmail(user?.email);
+				const registeredUser = await findUserByEmail(user?.email);
 				if (!registeredUser?.emailVerified) return false;
 			}
 			return true;
@@ -38,7 +38,7 @@ export const {
 			if (user) {
 				// User is available during sign-in
 				if (user.id) {
-					const isTwoFactorEnabled = await isTwoFactorAutenticationEnabled(user?.id || "");
+					const isTwoFactorEnabled = await isTwoFactorAuthenticationEnabled(user?.id || "");
 					token.isTwoFactorEnabled = isTwoFactorEnabled;
 				}
 				token.role = UserRole.DEFAULT;
