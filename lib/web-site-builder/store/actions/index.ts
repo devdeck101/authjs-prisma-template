@@ -1,5 +1,6 @@
 import type { EditorState, Element } from "@/types/web-site-builder";
 import { ActionType, type EditorAction, type EditorActionReducer } from "@/types/web-site-builder/actions";
+
 /**
  * Creates the reducer function for the Website builder.
  *
@@ -11,12 +12,19 @@ import { ActionType, type EditorAction, type EditorActionReducer } from "@/types
 const editorActionReducer: EditorActionReducer = (state: EditorState, action: EditorAction): EditorState => {
 	switch (action.type) {
 		case ActionType.AddElement: {
-			const { element: newElement, containerId } = action.payload;
+			const { element: newElement, containerId, targetIndex } = action.payload;
 			if (!containerId) {
+				const currentElements = [...state.editor.elements];
+				if (typeof targetIndex === "number" && targetIndex >= 0 && targetIndex <= currentElements.length) {
+					currentElements.splice(targetIndex, 0, newElement);
+				} else {
+					currentElements.push(newElement);
+				}
 				const newState: EditorState = {
 					editor: {
 						...state.editor,
-						elements: [...state.editor.elements, newElement],
+						elements: currentElements,
+						selectedElement: newElement,
 					},
 				};
 				return newState;
@@ -27,6 +35,7 @@ const editorActionReducer: EditorActionReducer = (state: EditorState, action: Ed
 				editor: {
 					...state.editor,
 					elements: copyElements,
+					selectedElement: newElement,
 				},
 			};
 			return newState;
@@ -51,15 +60,17 @@ const editorActionReducer: EditorActionReducer = (state: EditorState, action: Ed
 			return newState;
 		}
 		case ActionType.DeleteElement: {
-			//TODO: find element on multi dimensional array
 			const { elementId } = action.payload;
 			const currentElements = [...state.editor.elements];
 			const updateElements = currentElements.filter((el) => el.id !== elementId);
+
+			const isSelectedDeleted = state.editor.selectedElement?.id === elementId;
 
 			const newState: EditorState = {
 				editor: {
 					...state.editor,
 					elements: [...updateElements],
+					selectedElement: isSelectedDeleted ? undefined : state.editor.selectedElement,
 				},
 			};
 			return newState;
@@ -68,14 +79,79 @@ const editorActionReducer: EditorActionReducer = (state: EditorState, action: Ed
 			const updatedElement = action.payload.element;
 			const newElements = [...state.editor.elements];
 			const index = newElements.findIndex((el) => el.id === updatedElement.id);
-			newElements[index] = updatedElement;
+			if (index !== -1) {
+				newElements[index] = updatedElement;
+			}
 			const newState: EditorState = {
 				editor: {
 					...state.editor,
 					elements: [...newElements],
+					selectedElement: updatedElement,
 				},
 			};
 			return newState;
+		}
+		case ActionType.MoveElement: {
+			const { elementId, direction } = action.payload;
+			const currentElements = [...state.editor.elements];
+			const index = currentElements.findIndex((el) => el.id === elementId);
+			if (index === -1) return state;
+
+			const newIndex = direction === "up" ? index - 1 : index + 1;
+			if (newIndex < 0 || newIndex >= currentElements.length) return state;
+
+			const [movedElement] = currentElements.splice(index, 1);
+			currentElements.splice(newIndex, 0, movedElement);
+
+			const newState: EditorState = {
+				editor: {
+					...state.editor,
+					elements: currentElements,
+				},
+			};
+			return newState;
+		}
+		case ActionType.ReorderElements: {
+			const { sourceIndex, destinationIndex } = action.payload;
+			const currentElements = [...state.editor.elements];
+			if (
+				sourceIndex < 0 ||
+				sourceIndex >= currentElements.length ||
+				destinationIndex < 0 ||
+				destinationIndex >= currentElements.length ||
+				sourceIndex === destinationIndex
+			) {
+				return state;
+			}
+
+			const [movedElement] = currentElements.splice(sourceIndex, 1);
+			currentElements.splice(destinationIndex, 0, movedElement);
+
+			const newState: EditorState = {
+				editor: {
+					...state.editor,
+					elements: currentElements,
+				},
+			};
+			return newState;
+		}
+		case ActionType.ChangeDeviceMode: {
+			const { deviceMode } = action.payload;
+			return {
+				editor: {
+					...state.editor,
+					deviceMode,
+				},
+			};
+		}
+		case ActionType.ChangePreviewMode: {
+			const { previewMode } = action.payload;
+			return {
+				editor: {
+					...state.editor,
+					previewMode,
+				},
+			};
 		}
 
 		default:
@@ -96,18 +172,17 @@ const addElementById = (elements: Element[], id: string, newElement: Element): b
 	for (const element of elements) {
 		if (element.id === id) {
 			if (!element.content) {
-				element.content = [] as Element[]; // Initialize content array if it doesn't exist
+				element.content = [] as Element[];
 			}
-			element.content = [...element.content, newElement]; // Add new element to content array
-			return true; // Element found and new element added
+			element.content = [...element.content, newElement];
+			return true;
 		}
 
-		// Recursively search in child elements
 		if (Array.isArray(element.content) && addElementById(element.content, id, newElement)) {
-			return true; // Element found and new element added in child elements
+			return true;
 		}
 	}
-	return false; // Element with given id not found
+	return false;
 };
 
 function cloneDeep<T>(value: T): T {
@@ -124,7 +199,7 @@ function cloneDeep<T>(value: T): T {
 		return copy as unknown as T;
 	}
 	if (typeof value === "function") {
-		return value.bind({}) as unknown as T; // Return a bound copy of the function
+		return value.bind({}) as unknown as T;
 	}
 
 	return value;

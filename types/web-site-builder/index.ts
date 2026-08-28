@@ -22,6 +22,11 @@ enum ElementType {
 	TextElement = "TextElement",
 	ContainerElement = "ContainerElement",
 	SimpleBannerElement = "SimpleBannerElement",
+	DefaultHeroElement = "DefaultHeroElement",
+	VisualHeadingHeroElement = "VisualHeadingHeroElement",
+	DefaultCtaElement = "DefaultCtaElement",
+	ImageCtaElement = "ImageCtaElement",
+	HeadingCtaElement = "HeadingCtaElement",
 }
 
 interface ElementProps extends React.HTMLAttributes<HTMLDivElement>, PropsWithChildren {
@@ -49,6 +54,13 @@ interface ElementButton {
 	tooltip: string;
 }
 
+interface ComponentCategory {
+	id: string;
+	label: string;
+	icon: React.ElementType;
+	elements: Element[];
+}
+
 interface Editor {
 	id: string;
 	elements: Element[];
@@ -71,6 +83,7 @@ export {
 	DeviceMode,
 	ElementType,
 	PreviewMode,
+	type ComponentCategory,
 	type EditorState,
 	type Element,
 	type ElementButton,
