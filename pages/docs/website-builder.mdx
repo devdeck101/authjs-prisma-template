@@ -1,0 +1,336 @@
+﻿---
+title: Website Builder - Hot Page
+description: Como criar novos componentes e categorias no Website Builder
+---
+
+import { FileTree, Callout, Steps, Tabs, Tab } from 'nextra/components'
+
+# Website Builder (Campaign Hot Page) 🚀
+
+O **Website Builder** é uma ferramenta interativa no padrão *drag-and-drop* desenvolvida para a montagem de landing pages e hot pages de campanha em tempo real.
+
+O exemplo funcional pode ser acessado na rota:
+```bash
+/example/web-site-builder/campaign-hot-page
+```
+
+---
+
+## 🏗️ Estrutura de Diretórios do Builder
+
+<FileTree>
+  <FileTree.Folder name="app/example/web-site-builder/campaign-hot-page" defaultOpen>
+    <FileTree.File name="page.tsx" />
+    <FileTree.Folder name="_components" defaultOpen>
+      <FileTree.File name="campaign-builder.tsx" />
+      <FileTree.File name="web-site-builder-campaign-config.tsx" />
+      <FileTree.File name="web-site-builder-campaign.tsx" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+  <FileTree.Folder name="components/web-site-builder" defaultOpen>
+    <FileTree.File name="canva/index.tsx" />
+    <FileTree.File name="element-button/index.tsx" />
+    <FileTree.File name="main/index.tsx" />
+    <FileTree.Folder name="preview" defaultOpen>
+      <FileTree.File name="element-actions/index.tsx" />
+      <FileTree.File name="index.tsx" />
+    </FileTree.Folder>
+    <FileTree.Folder name="sidebar-components" defaultOpen>
+      <FileTree.File name="edit-component/index.tsx" />
+      <FileTree.File name="index.tsx" />
+    </FileTree.Folder>
+    <FileTree.File name="sidebar-modules/index.tsx" />
+  </FileTree.Folder>
+  <FileTree.Folder name="lib/web-site-builder" defaultOpen>
+    <FileTree.Folder name="elements" defaultOpen>
+      <FileTree.File name="index.ts" />
+      <FileTree.Folder name="default-hero-element">
+        <FileTree.File name="index.tsx" />
+      </FileTree.Folder>
+      <FileTree.Folder name="default-cta-element">
+        <FileTree.File name="index.tsx" />
+      </FileTree.Folder>
+    </FileTree.Folder>
+    <FileTree.Folder name="store">
+      <FileTree.Folder name="actions">
+        <FileTree.File name="index.ts" />
+      </FileTree.Folder>
+      <FileTree.File name="index.tsx" />
+    </FileTree.Folder>
+  </FileTree.Folder>
+  <FileTree.Folder name="types/web-site-builder" defaultOpen>
+    <FileTree.File name="actions/index.ts" />
+    <FileTree.File name="index.ts" />
+  </FileTree.Folder>
+</FileTree>
+
+---
+
+## 🧩 Como Criar um Novo Componente
+
+Cada componente do Website Builder é um módulo auto-contido que define sua interface de arrastar (**ElementButton**), seu estado inicial (**customAttributes**), sua renderização no canvas (**PreviewComponent**), sua versão de produção (**LiveComponent**) e seu formulário de configuração (**EditComponent**).
+
+<Steps>
+
+### 1. Registrar o Identificador do Componente
+Abra o arquivo `types/web-site-builder/index.ts` e adicione o novo elemento ao enum `ElementType`:
+
+```typescript
+export enum ElementType {
+  ContainerElement = "ContainerElement",
+  TextElement = "TextElement",
+  SimpleBannerElement = "SimpleBannerElement",
+  DefaultHeroElement = "DefaultHeroElement",
+  VisualHeadingHeroElement = "VisualHeadingHeroElement",
+  DefaultCtaElement = "DefaultCtaElement",
+  ImageCtaElement = "ImageCtaElement",
+  HeadingCtaElement = "HeadingCtaElement",
+  // Adicione seu novo componente aqui:
+  PricingTableElement = "PricingTableElement",
+}
+```
+
+### 2. Criar a Pasta e o Módulo do Componente
+Crie o arquivo em `lib/web-site-builder/elements/pricing-table-element/index.tsx`:
+
+```tsx
+"use client";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { v4 as uuidv4 } from "uuid";
+import { DollarSign } from "lucide-react";
+import { useWebsiteBuilder } from "@/hooks/web-site-builder";
+import { cn } from "@/lib/utils";
+import { DeviceMode, type Element, type ElementButton, type ElementProps, ElementType } from "@/types/web-site-builder";
+import { ActionType, type UpdateElement } from "@/types/web-site-builder/actions";
+import ElementActions from "@/components/web-site-builder/preview/element-actions";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
+// 1. Tipo do Elemento
+const type: ElementType = ElementType.PricingTableElement;
+
+// 2. Atributos Padrão (customAttributes)
+const customAttributes = {
+  title: "Nossos Planos",
+  subtitle: "Escolha o plano ideal para sua empresa",
+  price: "R$ 99/mês",
+  buttonText: "Assinar Agora",
+  buttonLink: "#",
+};
+
+// 3. Botão da Barra Lateral
+const elementButton: ElementButton = {
+  icon: DollarSign,
+  label: "Tabela de Preço",
+  tooltip: "Bloco de precificação com botão de assinatura",
+};
+
+// 4. Instância do Elemento
+const PricingTableElement: Element = {
+  constructor: function () {
+    this.id = uuidv4();
+    return { ...this };
+  },
+  id: uuidv4(),
+  type,
+  customAttributes,
+  elementButton,
+  previewComponent: PreviewComponent,
+  editComponent: EditComponent,
+  liveComponent: LiveComponent,
+};
+
+export { elementButton, PricingTableElement };
+
+// 5. Renderização do Conteúdo com Suporte a DeviceMode (Desktop/Tablet/Mobile)
+function Content({ instance }: { instance: Element }) {
+  const { state } = useWebsiteBuilder();
+  const deviceMode = state?.editor?.deviceMode || DeviceMode.Desktop;
+  const isMobile = deviceMode === DeviceMode.Mobile;
+
+  const {
+    title = "Nossos Planos",
+    subtitle = "Escolha o plano ideal",
+    price = "R$ 99/mês",
+    buttonText = "Assinar Agora",
+    buttonLink = "#",
+  } = instance.customAttributes;
+
+  return (
+    <section className={cn("w-full bg-white dark:bg-gray-900 mx-auto text-center", isMobile ? "py-8 px-4" : "py-16 px-8 max-w-4xl")}>
+      <h2 className={cn("font-extrabold text-foreground", isMobile ? "text-2xl mb-2" : "text-4xl mb-3")}>{String(title)}</h2>
+      <p className="text-muted-foreground text-sm mb-6">{String(subtitle)}</p>
+      <div className="text-3xl font-black text-primary mb-6">{String(price)}</div>
+      <a href={String(buttonLink)} className="inline-flex py-3 px-6 rounded-lg bg-primary text-primary-foreground font-semibold hover:bg-primary/90 transition-colors">
+        {String(buttonText)}
+      </a>
+    </section>
+  );
+}
+
+// 6. Preview Component (com a barra de ações: reordenar, arrastar, excluir)
+function PreviewComponent({ instance, className, ...rest }: ElementProps) {
+  return (
+    <ElementActions element={instance}>
+      <div {...rest} className={cn("w-full", className)} style={instance.styles}>
+        <Content instance={instance} />
+      </div>
+    </ElementActions>
+  );
+}
+
+// 7. Live Component (versão limpa para preview em tempo real e publicação)
+function LiveComponent({ instance, className, ...rest }: ElementProps) {
+  return (
+    <div {...rest} className={cn("w-full", className)} style={instance.styles}>
+      <Content instance={instance} />
+    </div>
+  );
+}
+
+// 8. Formulário de Edição Lateral com Zod
+const Schema = z.object({
+  title: z.string().min(2, "Título obrigatório"),
+  subtitle: z.string().optional(),
+  price: z.string().min(1, "Preço obrigatório"),
+  buttonText: z.string().optional(),
+  buttonLink: z.string().optional(),
+});
+
+type FormValues = z.infer<typeof Schema>;
+
+function EditComponent({ instance }: ElementProps) {
+  const { dispatch } = useWebsiteBuilder();
+  const form = useForm<FormValues>({
+    resolver: zodResolver(Schema),
+    defaultValues: { ...instance.customAttributes },
+    mode: "onBlur",
+  });
+
+  const onSubmit = (values: FormValues) => {
+    dispatch({
+      type: ActionType.UpdateElement,
+      payload: {
+        element: { ...instance, customAttributes: { ...values } },
+      },
+    });
+  };
+
+  return (
+    <Form {...form}>
+      <form onBlur={form.handleSubmit(onSubmit)} className="space-y-4 px-1">
+        <div className="font-semibold text-sm border-b pb-2">Configurações da Tabela</div>
+        <FormField
+          control={form.control}
+          name="title"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Título</FormLabel>
+              <FormControl><Input {...field} /></FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="price"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Preço</FormLabel>
+              <FormControl><Input {...field} /></FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </form>
+    </Form>
+  );
+}
+```
+
+### 3. Registrar o Componente no Dicionário Global
+No arquivo `lib/web-site-builder/elements/index.ts`:
+
+```typescript
+import { PricingTableElement } from "./pricing-table-element";
+
+export const ElementImpl: Record<ElementType, Element> = {
+  // ... componentes existentes
+  [ElementType.PricingTableElement]: PricingTableElement,
+};
+```
+
+</Steps>
+
+---
+
+## 🗂️ Como Criar uma Nova Categoria
+
+As categorias organizam os blocos na barra lateral sanfonada (**Accordion**) e alimentam automaticamente o sistema de busca em tempo real.
+
+<Steps>
+
+### 1. Adicionar a Categoria em `ComponentCategories`
+No arquivo `lib/web-site-builder/elements/index.ts`, adicione o novo objeto no array `ComponentCategories`:
+
+```typescript
+import { DollarSign } from "lucide-react";
+
+export const ComponentCategories: ComponentCategory[] = [
+  {
+    id: "hero",
+    title: "Seções de Destaque (Hero)",
+    icon: Sparkles,
+    elements: [
+      ElementType.DefaultHeroElement,
+      ElementType.VisualHeadingHeroElement,
+    ],
+  },
+  {
+    id: "cta",
+    title: "Chamadas para Ação (CTA)",
+    icon: Megaphone,
+    elements: [
+      ElementType.DefaultCtaElement,
+      ElementType.ImageCtaElement,
+      ElementType.HeadingCtaElement,
+    ],
+  },
+  // Nova Categoria:
+  {
+    id: "pricing",
+    title: "Planos e Preços",
+    icon: DollarSign,
+    elements: [
+      ElementType.PricingTableElement,
+    ],
+  },
+  {
+    id: "basic",
+    title: "Componentes Básicos",
+    icon: LayoutGrid,
+    elements: [
+      ElementType.ContainerElement,
+      ElementType.TextElement,
+      ElementType.SimpleBannerElement,
+    ],
+  },
+];
+```
+
+<Callout type="info" emoji="💡">
+  **Integração Instantânea**: Ao salvar a categoria em `ComponentCategories`, o Website Builder gera automaticamente o item no Accordion, calcula as contagens de blocos e integra a categoria ao campo de pesquisa em tempo real.
+</Callout>
+
+</Steps>
+
+---
+
+## ⚡ Recursos e Funcionalidades Suportadas
+
+- **🔄 Reorganização de Componentes**: Os blocos adicionados ao canvas podem ser movidos para cima (**↑**) ou para baixo (**↓**) através da barra flutuante ou arrastados (**drag & drop**) diretamente sobre outros blocos.
+- **📱 Simulador de Dispositivos**: Alternância em tempo real entre **Desktop**, **Tablet (768px)** e **Celular (375px)** tanto na tela de edição quanto no modal de visualização (*Preview*).
+- **🔎 Busca Instantânea**: Campo de filtro em tempo real com expansão automática de categorias e botão de limpar busca.
