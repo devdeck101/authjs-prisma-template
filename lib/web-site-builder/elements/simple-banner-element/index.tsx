@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import ElementActions from "@/components/web-site-builder/preview/element-actions";
 import { useWebsiteBuilder } from "@/hooks/web-site-builder";
 import { cn } from "@/lib/utils";
-import { type ElementButton, ElementType, type Element, type ElementProps } from "@/types/web-site-builder";
+import { type Element, type ElementButton, type ElementProps, ElementType } from "@/types/web-site-builder";
 import { ActionType, type UpdateElement } from "@/types/web-site-builder/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Circle, Megaphone } from "lucide-react";

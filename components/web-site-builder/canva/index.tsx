@@ -3,7 +3,7 @@
 import { useWebsiteBuilder } from "@/hooks/web-site-builder";
 import { cn } from "@/lib/utils";
 import { ElementImpl } from "@/lib/web-site-builder/elements";
-import type { ElementType, Element } from "@/types/web-site-builder";
+import type { Element, ElementType } from "@/types/web-site-builder";
 import { ActionType, type AddElement, type SelectElement } from "@/types/web-site-builder/actions";
 import { useState } from "react";
 
@@ -43,7 +43,10 @@ const Canvas = () => {
 
 	return (
 		<div
-			className={cn("flex flex-col items-center justify-start flex-1 cursor-pointer", over ? "border border-green-500" : "")}
+			className={cn(
+				"flex flex-col items-center justify-start flex-1 cursor-pointer",
+				over ? "border border-green-500" : "",
+			)}
 			onDragOver={onDragOver}
 			onDragLeave={onDragLeave}
 			onDragEnd={onDragEnd}
@@ -51,12 +54,7 @@ const Canvas = () => {
 		>
 			{state.editor.elements.map((element) => {
 				const PreviewComponent = element.previewComponent;
-				return (
-					<PreviewComponent
-						key={element.id}
-						instance={element}
-					/>
-				);
+				return <PreviewComponent key={element.id} instance={element} />;
 			})}
 			{/* {JSON.stringify(state.editor.elements)} */}
 		</div>

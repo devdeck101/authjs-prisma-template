@@ -12,7 +12,6 @@ type Props = {
 
 const LoginSocialButton = ({ children, provider, callbackUrl }: Props) => {
 	return (
-		// biome-ignore lint: TODO: Need to implement key stroke shortcuts
 		<Button
 			variant={"outline"}
 			size={"default"}
